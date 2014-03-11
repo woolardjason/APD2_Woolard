@@ -9,15 +9,21 @@
  */
 package com.jasonwoolard.geoshare;
 
-import com.parse.ParseAnalytics;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+
+import com.parse.ParseAnalytics;
+import com.parse.ParseUser;
 
 public class ProfileActivity extends Activity {
 
+	public static final String mTAG = "Profile Acitivty";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,14 +32,26 @@ public class ProfileActivity extends Activity {
 		// Parse Analytics - (User data)
 		ParseAnalytics.trackAppOpened(getIntent());
 		
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if (currentUser == null)
+		{
+			presentUserWithLogin();
+		}
+		else
+		{
+			Log.i(mTAG, currentUser.getUsername());
+		}
+		
+	}
+
+	@SuppressLint("InlinedApi")
+	public void presentUserWithLogin() {
 		// Displaying the Login Activity to the user
-		// TODO: If conditional checking if user is logged in, if so present with profile activity if not, login activity below:
 		Intent i = new Intent(this, LoginActivity.class);
 		// Logging in =  New Task, Old Task = Clear so back button cannot be used to go back into Profile Activity if logged out.
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(i);
-		
 	}
 
 	@Override
@@ -42,5 +60,15 @@ public class ProfileActivity extends Activity {
 		getMenuInflater().inflate(R.menu.profile, menu);
 		return true;
 	}
-
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) 
+		{
+		case R.id.action_log_out:
+			ParseUser.logOut();
+			presentUserWithLogin();
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

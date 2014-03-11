@@ -15,33 +15,20 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:hint="Enter Username"
+        android:textSize="13sp"
         android:ems="10" />
 
-    <CheckBox
-        android:id="@+id/checkbox_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editText_password"
-        android:layout_below="@+id/editText_username"
-        android:text="Save Username" />
 
     <EditText
         android:id="@+id/editText_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText_username"
-        android:layout_below="@+id/checkbox_username"
+        android:layout_below="@+id/editText_username"
         android:ems="10"
+        android:textSize="13sp"
         android:inputType="textPassword" 
         android:hint="Enter Password" />
-
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_password"
-        android:layout_centerHorizontal="true"
-        android:text="Login" />
 
     <TextView
         android:id="@+id/textView_or"
@@ -58,6 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_or"
         android:layout_centerHorizontal="true"
+        android:textSize="12sp"
         android:text="Browse As Guest" />
 
     <TextView
@@ -78,5 +66,26 @@
         android:layout_marginTop="24dp"
         android:text="Forgot Password?"
         android:textSize="12sp" />
+
+    <CheckBox
+        android:id="@+id/checkBox_saveUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editText_password"
+        android:layout_alignRight="@+id/editText_password"
+        android:layout_below="@+id/editText_password"
+        android:text="Save Username" 
+        android:textSize="12sp"
+        />
+    
+
+    <Button
+        android:id="@+id/button_login"
+        android:textSize="13sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button_browse_as_guest"
+        android:layout_below="@+id/checkBox_saveUsername"
+        android:text="Login" />
 
 </RelativeLayout>
