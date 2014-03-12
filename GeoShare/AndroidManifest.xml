@@ -7,14 +7,16 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="com.jasonwoolard.geoshare.GeoShareApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" android:name="GeoShareApplication">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="com.jasonwoolard.geoshare.ProfileActivity"
             android:label="@string/app_name" >
@@ -30,7 +32,12 @@
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.SignUpActivity"
-            android:label="@string/title_activity_sign_up" android:parentActivityName="com.jasonwoolard.geoshare.LoginActivity">
+            android:label="@string/title_activity_sign_up"
+            android:parentActivityName="com.jasonwoolard.geoshare.LoginActivity" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.PostSaleActivity"
+            android:label="@string/title_activity_post_sale" >
         </activity>
     </application>
 

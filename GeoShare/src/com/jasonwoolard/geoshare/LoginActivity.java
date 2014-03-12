@@ -47,36 +47,36 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		// Initializing all UI Elements to be used
 		initializeUIElements();
-		
+
 		mSignUpTV.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// Setting intent for the SignUpActivity to be launched, then starting the intent.
 				Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
 				startActivity(i);
-				
+
 			}
 		});
 		mResetPwTV.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				 // Create the fragment and show it as a dialog.
-			    ResetPasswordDialogFragment newFragment = ResetPasswordDialogFragment.newInstance();
-			    newFragment.show(getFragmentManager(), "dialog");
+				// Create the fragment and show it as a dialog.
+				ResetPasswordDialogFragment newFragment = ResetPasswordDialogFragment.newInstance();
+				newFragment.show(getFragmentManager(), "dialog");
 			}
 		});
 		// Obtaining Shared Preferences Data
 		mSharedPref = getSharedPreferences(mUserData, 0);
-		
+
 		String savedUserName = mSharedPref.getString("username", "");
 		if (!savedUserName.isEmpty())
 		{
 			mUserName.setText(savedUserName);
 			mSaveUserName.setChecked(true);
 		}		
-		
+
 		// Setting on click listener for the Sign Up Button
 		mLogInBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -101,7 +101,7 @@ public class LoginActivity extends Activity {
 				else
 				{
 					ParseUser.logInInBackground(userName, password, new LogInCallback() {
-						
+
 						@Override
 						public void done(ParseUser user, ParseException e) {
 							if (e == null)
@@ -111,12 +111,12 @@ public class LoginActivity extends Activity {
 								{
 									// Referencing string preference editor
 									SharedPreferences.Editor editor = mSharedPref.edit();
-												
+
 									// Obtaining user's username from EditText
 									String usersName = mUserName.getText().toString();
 									// Putting string in username key
 									editor.putString("username", usersName);
-								
+
 									// Committing / Saving out data
 									editor.commit();			 
 								}
@@ -124,10 +124,10 @@ public class LoginActivity extends Activity {
 								{
 									// User rather not save their user name, so if they previously saved it empty the username key in SharedPref
 									SharedPreferences.Editor editor = mSharedPref.edit();
-								
+
 									// Putting string in username key
 									editor.putString("username", "");
-								
+
 									// Committing / Saving out data
 									editor.commit();			 
 								}

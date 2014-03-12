@@ -77,6 +77,8 @@ public class SignUpActivity extends Activity {
 					newGeoShareUser.setUsername(userName);
 					newGeoShareUser.setPassword(password);
 					newGeoShareUser.setEmail(emailAddress);
+					// Rewarding the user with 100 gBux to be used in the applications future virtual market
+					newGeoShareUser.put("gBux", 100);
 					newGeoShareUser.signUpInBackground(new SignUpCallback() {
 						
 						@Override
@@ -90,6 +92,7 @@ public class SignUpActivity extends Activity {
 								i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 								i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 								startActivity(i);
+								
 							}
 							else
 							{

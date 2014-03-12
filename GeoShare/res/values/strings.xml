@@ -13,4 +13,9 @@
     <string name="success_title_reset_pw">Congrats!</string>
     <string name="success_message_reset_pw">Success! Check your email shortly for a link to reset your password.</string>
     <string name="menu_label_log_out">Log Out</string>
+    <string name="success_title">Congrats!</string>
+    <string name="success_message_signup">You have been successfully signed up and rewarded 100 virtual g-Bux to be used in our upcoming virtual market, save up!</string>
+    <string name="menu_label_post_sale">Post Sale</string>
+    <string name="title_activity_post_sale">PostSaleActivity</string>
+
 </resources>

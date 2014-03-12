@@ -68,6 +68,10 @@ public class ProfileActivity extends Activity {
 			ParseUser.logOut();
 			presentUserWithLogin();
 			break;
+		case R.id.action_post_sale:
+			Intent i = new Intent(this, PostSaleActivity.class);
+			startActivity(i);
+			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
