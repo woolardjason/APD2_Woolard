@@ -23,7 +23,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -33,6 +32,7 @@ public class LoginActivity extends Activity {
 
 	// Member Variables
 	public TextView mSignUpTV;
+	public TextView mResetPwTV;
 	public EditText mUserName;
 	public EditText mUserPassword;
 	public Button mLogInBtn; 
@@ -48,17 +48,6 @@ public class LoginActivity extends Activity {
 		// Initializing all UI Elements to be used
 		initializeUIElements();
 		
-		// Obtaining Shared Preferences Data
-		
-		mSharedPref = getSharedPreferences(mUserData, 0);
-		
-		String savedUserName = mSharedPref.getString("username", "");
-		if (!savedUserName.isEmpty())
-		{
-			mUserName.setText(savedUserName);
-			mSaveUserName.setChecked(true);
-		}		
-		mSignUpTV = (TextView)findViewById(R.id.textView_sign_up);
 		mSignUpTV.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -69,8 +58,25 @@ public class LoginActivity extends Activity {
 				
 			}
 		});
-	
-
+		mResetPwTV.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 // Create the fragment and show it as a dialog.
+			    ResetPasswordDialogFragment newFragment = ResetPasswordDialogFragment.newInstance();
+			    newFragment.show(getFragmentManager(), "dialog");
+			}
+		});
+		// Obtaining Shared Preferences Data
+		mSharedPref = getSharedPreferences(mUserData, 0);
+		
+		String savedUserName = mSharedPref.getString("username", "");
+		if (!savedUserName.isEmpty())
+		{
+			mUserName.setText(savedUserName);
+			mSaveUserName.setChecked(true);
+		}		
+		
 		// Setting on click listener for the Sign Up Button
 		mLogInBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -162,5 +168,7 @@ public class LoginActivity extends Activity {
 		mUserPassword.setTransformationMethod(new PasswordTransformationMethod());
 		mLogInBtn = (Button) findViewById(R.id.button_login);
 		mSaveUserName = (CheckBox) findViewById(R.id.checkBox_saveUsername);
+		mSignUpTV = (TextView)findViewById(R.id.textView_sign_up);
+		mResetPwTV = (TextView) findViewById(R.id.textView_forgot_pw);
 	}
 }

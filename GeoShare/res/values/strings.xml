@@ -10,5 +10,7 @@
     <string name="error_message_sign_up_missing_field">It appears you have forgotten to fill in a required field! Please check and try again.</string>
     <string name="error_message_sign_up_verify_pw">It appears the two entered passwords do not match! Please try again. </string>
     <string name="error_title_sign_up_verify_pw">Uh Oh...</string>
+    <string name="success_title_reset_pw">Congrats!</string>
+    <string name="success_message_reset_pw">Success! Check your email shortly for a link to reset your password.</string>
     <string name="menu_label_log_out">Log Out</string>
 </resources>
