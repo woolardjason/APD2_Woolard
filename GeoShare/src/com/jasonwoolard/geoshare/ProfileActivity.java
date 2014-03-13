@@ -32,13 +32,16 @@ public class ProfileActivity extends Activity {
 		// Parse Analytics - (User data)
 		ParseAnalytics.trackAppOpened(getIntent());
 		
+		// Setting up currentUser to current logged in user
 		ParseUser currentUser = ParseUser.getCurrentUser();
+		// If user is not logged in, present them with Login Activity
 		if (currentUser == null)
 		{
 			presentUserWithLogin();
 		}
 		else
 		{
+			// Print their username to LogCat for debugging purposes
 			Log.i(mTAG, currentUser.getUsername());
 		}
 		
@@ -65,10 +68,12 @@ public class ProfileActivity extends Activity {
 		switch (item.getItemId()) 
 		{
 		case R.id.action_log_out:
+			// Logging out the current user and presenting them with the login activity.
 			ParseUser.logOut();
 			presentUserWithLogin();
 			break;
 		case R.id.action_post_sale:
+			// Launching new intent to start Post Sale Activity
 			Intent i = new Intent(this, PostSaleActivity.class);
 			startActivity(i);
 			break;
