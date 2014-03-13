@@ -24,32 +24,44 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_log_out=0x7f080018;
-        public static final int action_post_sale=0x7f080019;
-        public static final int action_settings=0x7f080017;
+        public static final int TextView01=0x7f080015;
+        public static final int TextView02=0x7f080016;
+        public static final int action_log_out=0x7f080024;
+        public static final int action_post_sale=0x7f080025;
+        public static final int action_settings=0x7f080023;
         public static final int button_browse_as_guest=0x7f080004;
         public static final int button_login=0x7f080003;
         public static final int button_post_sale=0x7f080010;
-        public static final int button_reset_pw=0x7f080016;
-        public static final int button_sign_up=0x7f080013;
+        public static final int button_reset_pw=0x7f080022;
+        public static final int button_sign_up=0x7f08001f;
         public static final int checkBox_saveUsername=0x7f080007;
         public static final int editText_captcha_input=0x7f08000f;
-        public static final int editText_emailAddress=0x7f080012;
+        public static final int editText_emailAddress=0x7f08001e;
         public static final int editText_item_description=0x7f08000d;
         public static final int editText_item_location=0x7f08000a;
         public static final int editText_item_price=0x7f080009;
         public static final int editText_item_title=0x7f080008;
         public static final int editText_password=0x7f080001;
-        public static final int editText_reset_email=0x7f080015;
+        public static final int editText_reset_email=0x7f080021;
         public static final int editText_username=0x7f080000;
-        public static final int editText_verifyPassword=0x7f080011;
+        public static final int editText_verifyPassword=0x7f08001d;
+        public static final int listView1=0x7f08001c;
+        public static final int textView1=0x7f080013;
+        public static final int textView2=0x7f080014;
+        public static final int textView3=0x7f080017;
+        public static final int textView4=0x7f080018;
+        public static final int textView5=0x7f080019;
+        public static final int textView6=0x7f08001a;
+        public static final int textView7=0x7f08001b;
         public static final int textView_captcha=0x7f08000c;
         public static final int textView_captcha_code=0x7f08000e;
         public static final int textView_enter_captcha=0x7f08000b;
         public static final int textView_forgot_pw=0x7f080006;
         public static final int textView_or=0x7f080002;
-        public static final int textView_reset_title=0x7f080014;
+        public static final int textView_reset_title=0x7f080020;
         public static final int textView_sign_up=0x7f080005;
+        public static final int textView_users_name=0x7f080012;
+        public static final int textView_welcome_label=0x7f080011;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
