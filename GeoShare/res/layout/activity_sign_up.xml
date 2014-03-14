@@ -6,19 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#336699"
     tools:context=".SignUpActivity" >
-
-    <EditText
-        android:id="@+id/editText_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:hint="Username"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
 
     <EditText
         android:id="@+id/editText_password"
@@ -27,7 +16,8 @@
         android:layout_alignLeft="@+id/editText_username"
         android:layout_below="@+id/editText_username"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/et_password"
+        android:lines="1"        
         android:inputType="textPassword" />
 
     <EditText
@@ -37,7 +27,8 @@
         android:layout_alignLeft="@+id/editText_password"
         android:layout_below="@+id/editText_password"
         android:ems="10"
-        android:hint="Verify Password"
+        android:lines="1"
+        android:hint="@string/et_verify_password"
         android:inputType="textPassword" />
 
     <EditText
@@ -46,7 +37,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText_verifyPassword"
         android:layout_below="@+id/editText_verifyPassword"
-        android:hint="Email Address"
+        android:hint="@string/et_email_address"
+        android:lines="1"
         android:inputType="textEmailAddress"
         android:ems="10" />
 
@@ -56,6 +48,27 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText_emailAddress"
         android:layout_centerHorizontal="true"
-        android:text="Sign Up!" />
+        android:text="@string/btn_sign_up" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+ 		android:layout_marginTop="50sp"
+        android:layout_marginBottom="30sp"
+        
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/lgo" />
+
+    <EditText
+        android:id="@+id/editText_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="@string/et_username"
+        android:lines="1" />
 
 </RelativeLayout>

@@ -6,15 +6,27 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#336699"
     tools:context=".LoginActivity" >
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50sp"
+        android:layout_marginBottom="30sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/lgo" />
+    
     <EditText
         android:id="@+id/editText_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:hint="Enter Username"
+        android:layout_below="@+id/imageView1"
+        android:hint="@string/et_enter_username"
+        android:lines="1"
         android:textSize="13sp"
         android:ems="10" />
 
@@ -26,9 +38,10 @@
         android:layout_alignLeft="@+id/editText_username"
         android:layout_below="@+id/editText_username"
         android:ems="10"
+        android:lines="1"    
         android:textSize="13sp"
         android:inputType="textPassword" 
-        android:hint="Enter Password" />
+        android:hint="@string/et_enter_password" />
 
     <TextView
         android:id="@+id/textView_or"
@@ -37,7 +50,7 @@
         android:layout_alignLeft="@+id/button_login"
         android:layout_below="@+id/button_login"
         android:gravity="center"
-        android:text="OR" />
+        android:text="@string/tv_or" />
 
     <Button
         android:id="@+id/button_browse_as_guest"
@@ -46,7 +59,7 @@
         android:layout_below="@+id/textView_or"
         android:layout_centerHorizontal="true"
         android:textSize="12sp"
-        android:text="Browse As Guest" />
+        android:text="@string/btn_browse_as_guest" />
 
     <TextView
         android:id="@+id/textView_sign_up"
@@ -55,7 +68,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="88dp"
-        android:text="New User? Sign Up!" />
+        android:text="@string/tv_new_user_sign_up" />
 
     <TextView
         android:id="@+id/textView_forgot_pw"
@@ -64,7 +77,7 @@
         android:layout_alignTop="@+id/textView_sign_up"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:text="Forgot Password?"
+        android:text="@string/tv_forgot_password"
         android:textSize="12sp" />
 
     <CheckBox
@@ -74,7 +87,7 @@
         android:layout_alignLeft="@+id/editText_password"
         android:layout_alignRight="@+id/editText_password"
         android:layout_below="@+id/editText_password"
-        android:text="Save Username" 
+        android:text="@string/cb_save_username" 
         android:textSize="12sp"
         />
     
@@ -86,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/button_browse_as_guest"
         android:layout_below="@+id/checkBox_saveUsername"
-        android:text="Login" />
+        android:text="@string/btn_login" />
+
 
 </RelativeLayout>

@@ -1,10 +1,14 @@
 package com.jasonwoolard.geoshare;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -93,7 +97,7 @@ public class PostSaleActivity extends Activity {
 		
 	}
 
-	public void initializeUIElements() {
+	public void initializeUIElements() { 
 		
 		mUser = ParseUser.getCurrentUser();
 		
@@ -107,12 +111,35 @@ public class PostSaleActivity extends Activity {
 		
 		mCaptchaCode = (TextView) findViewById(R.id.textView_captcha_code);
 	}
-
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	public void presentUserWithLogin() {
+		// Displaying the Login Activity to the user
+		Intent i = new Intent(this, LoginActivity.class);
+		// Logging in =  New Task, Old Task = Clear so back button cannot be used to go back into Profile Activity if logged out.
+		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		startActivity(i);
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.post_sale, menu);
 		return true;
 	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) 
+		{
+		case R.id.action_log_out:
+			// Logging out the current user and presenting them with the login activity.
+			ParseUser.logOut();
+			presentUserWithLogin();
 
+			break;
+		case R.id.action_profile_activity:
+			finish();
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

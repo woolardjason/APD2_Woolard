@@ -2,10 +2,11 @@
 <resources>
 
     <string name="app_name">GeoShare</string>
+    <string name="profile_activity_name">GeoShare Profile</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_login">Login To Your Account</string>
+    <string name="title_activity_sign_up">Sign Up For Account</string>
     <string name="error_title_sign_up_missing_field">Whoops!</string>
     <string name="error_message_sign_up_missing_field">It appears you have forgotten to fill in a required field! Please check and try again.</string>
     <string name="error_message_sign_up_verify_pw">It appears the two entered passwords do not match! Please try again. </string>
@@ -16,6 +17,31 @@
     <string name="success_title">Congrats!</string>
     <string name="success_message_signup">You have been successfully signed up and rewarded 100 virtual g-Bux to be used in our upcoming virtual market, save up!</string>
     <string name="menu_label_post_sale">Post Sale</string>
-    <string name="title_activity_post_sale">PostSaleActivity</string>
+    <string name="title_activity_post_sale">Post Sale</string>
+    <string name="btn_sign_up">Sign Up!</string>
+    <string name="et_email_address">Email Address</string>
+    <string name="et_verify_password">Verify Password</string>
+    <string name="et_password">Password</string>
+    <string name="et_username">Username</string>
+    <string name="et_enter_username">Enter Username</string>
+    <string name="et_enter_password">Enter Password</string>
+    <string name="tv_or">OR</string>
+    <string name="btn_browse_as_guest">Browse As Guest</string>
+    <string name="tv_new_user_sign_up">New User? Sign Up!</string>
+    <string name="tv_forgot_password">Forgot Password?</string>
+    <string name="cb_save_username">Save Username</string>
+    <string name="btn_login">Login</string>
+    <string name="et_item_name">Item Name</string>
+    <string name="et_item_price">Item Price</string>
+    <string name="et_item_location">Item Location</string>
+    <string name="tv_enter_captcha">Enter Captcha</string>
+    <string name="tv_captcha">Captcha</string>
+    <string name="tv_2222">2222</string>
+    <string name="et_item_description">Item Description</string>
+    <string name="btn_post_sale">Post Sale</string>
+    <string name="tv_g_bux">g-Bux</string>
+    <string name="tv_your_posted_sales">Your Posted Sales:</string>
+    <string name="tv_inbox">Inbox</string>
+    <string name="title_activity_my_posted_sales_detail">Item Details</string>
 
 </resources>

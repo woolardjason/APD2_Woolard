@@ -17,6 +17,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -25,17 +26,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.parse.LogInCallback;
+import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 public class LoginActivity extends Activity {
 
-	// Member Variables
+	// Member Variables 
 	public TextView mSignUpTV;
 	public TextView mResetPwTV;
 	public EditText mUserName;
 	public EditText mUserPassword;
 	public Button mLogInBtn; 
+	public Button mLogInAsGuestBtn;
 	public CheckBox mSaveUserName;
 	SharedPreferences mSharedPref;
 	public static String mUserData = "UserSavedData";
@@ -76,7 +79,26 @@ public class LoginActivity extends Activity {
 			mUserName.setText(savedUserName);
 			mSaveUserName.setChecked(true);
 		}		
-
+		mLogInAsGuestBtn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ParseAnonymousUtils.logIn(new LogInCallback() {
+					  @Override
+					  public void done(ParseUser user, ParseException e) {
+					    if (e != null) {
+					      Log.d("MyApp", "Anonymous login failed.");
+					    } else {
+					      Log.d("MyApp", "Anonymous user logged in.");
+					      Intent i = new Intent(LoginActivity.this, ProfileActivity.class);
+							i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+							startActivity(i);
+					    }
+					  }
+					});
+			}
+		});
 		// Setting on click listener for the Sign Up Button
 		mLogInBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -170,5 +192,6 @@ public class LoginActivity extends Activity {
 		mSaveUserName = (CheckBox) findViewById(R.id.checkBox_saveUsername);
 		mSignUpTV = (TextView)findViewById(R.id.textView_sign_up);
 		mResetPwTV = (TextView) findViewById(R.id.textView_forgot_pw);
+		mLogInAsGuestBtn = (Button) findViewById(R.id.button_browse_as_guest);
 	}
 }

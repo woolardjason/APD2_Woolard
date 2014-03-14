@@ -6,6 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#acacac"
     tools:context=".ProfileActivity" >
 
     <TextView
@@ -25,6 +26,8 @@
         android:layout_alignBottom="@+id/textView_welcome_label"
         android:layout_toRightOf="@+id/textView_welcome_label"
         android:text="TestUser"
+        android:layout_marginLeft="5sp"
+        android:textStyle="bold"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -38,37 +41,46 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView_inbox_amount"
         android:layout_width="60sp"
         android:gravity="center"
         android:layout_height="wrap_content"
+        android:background="#336699"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         android:layout_alignRight="@+id/textView_welcome_label"
         android:layout_below="@+id/textView_welcome_label"
         android:layout_marginTop="30dp"
-        android:text="35"
+        android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/textView_watching_amount"
+        android:background="#336699"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         android:layout_width="60sp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignBaseline="@+id/textView_inbox_amount"
+        android:layout_alignBottom="@+id/textView_inbox_amount"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="35"
+        android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-        android:id="@+id/TextView02"
+        android:id="@+id/textView_gBux_amount"
         android:layout_width="60sp"
+        android:background="#336699"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/TextView01"
-        android:layout_alignBottom="@+id/TextView01"
+        android:layout_alignBaseline="@+id/textView_watching_amount"
+        android:layout_alignBottom="@+id/textView_watching_amount"
         android:layout_alignParentRight="true"
         android:layout_marginRight="28dp"
         android:gravity="center"
-        android:text="35"
+        android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
@@ -77,6 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView1"
         android:layout_alignBottom="@+id/textView1"
+        android:background="#e3e3e3"
         android:layout_toLeftOf="@+id/textView_users_name"
         android:gravity="center"
         android:text="Inbox" />
@@ -86,16 +99,18 @@
  		android:layout_width="60sp"        
  		android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView3"
-        android:layout_alignRight="@+id/TextView01"
+        android:background="#e3e3e3"
+        android:layout_alignRight="@+id/textView_watching_amount"
         android:gravity="center"
         android:text="Watching" />
 
     <TextView
         android:id="@+id/textView5"
  		android:layout_width="60sp"
+        android:background="#e3e3e3"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextView02"
-        android:layout_below="@+id/TextView02"
+        android:layout_alignLeft="@+id/textView_gBux_amount"
+        android:layout_below="@+id/textView_gBux_amount"
         android:gravity="center"
         android:text="g-Bux" />
 
@@ -106,17 +121,25 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:layout_marginTop="45dp"
-        android:text="Your Posted Sales"
-        android:textSize="14sp" />
-
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="Your Posted Sales:"
+        android:background="#336699" />
     <TextView
-        android:id="@+id/textView7"
-        android:layout_width="wrap_content"
+        android:id="@+id/textView_posted_sales_amount"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textView6"
         android:layout_alignBottom="@+id/textView6"
         android:layout_toRightOf="@+id/textView6"
-        android:text="(6)" />
+        android:text="(0)" 
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:background="#336699" />
 
     <ListView
         android:id="@+id/listView1"

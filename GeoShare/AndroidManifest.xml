@@ -16,10 +16,12 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         <activity
             android:name="com.jasonwoolard.geoshare.ProfileActivity"
-            android:label="@string/app_name" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/profile_activity_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,16 +30,31 @@
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.LoginActivity"
-            android:label="@string/title_activity_login" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.SignUpActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_sign_up"
-            android:parentActivityName="com.jasonwoolard.geoshare.LoginActivity" >
+            android:parentActivityName="com.jasonwoolard.geoshare.LoginActivity"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.PostSaleActivity"
-            android:label="@string/title_activity_post_sale" >
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_post_sale"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.MyPostedSalesDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:parentActivityName="com.jasonwoolard.geoshare.ProfileActivity"
+            android:label="@string/title_activity_my_posted_sales_detail" 
+            android:screenOrientation="portrait" >
+            
         </activity>
     </application>
 
