@@ -66,7 +66,7 @@ public class PostSaleActivity extends Activity {
 					// Creating a new sale to be saved to the backend
 					ParseObject sale = new ParseObject("Sales");
 					sale.put("title", itemTitle);
-					sale.put("price", itemPrice);
+					sale.put("price", "$" + itemPrice);
 					sale.put("location", itemLocation);
 					sale.put("description", itemDescription);
 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#acacac"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/editText_resetEmailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter the email address you used to register and click Request below"
+        android:textSize="10sp"
+        android:inputType="textEmailAddress" >
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/button_cancelResetPw"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:background="@drawable/gradient_buttons"
+            android:text="Cancel" />
+
+        <Button
+            android:id="@+id/button_resetPW"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:background="@drawable/gradient_buttons"
+            android:text="Reset Password" />
+    </LinearLayout>
+
+</LinearLayout>

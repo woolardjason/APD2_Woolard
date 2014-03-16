@@ -26,7 +26,7 @@
     <string name="et_enter_username">Enter Username</string>
     <string name="et_enter_password">Enter Password</string>
     <string name="tv_or">OR</string>
-    <string name="btn_browse_as_guest">Browse As Guest</string>
+    <string name="btn_login_as_guest">Login As Guest</string>
     <string name="tv_new_user_sign_up">New User? Sign Up!</string>
     <string name="tv_forgot_password">Forgot Password?</string>
     <string name="cb_save_username">Save Username</string>

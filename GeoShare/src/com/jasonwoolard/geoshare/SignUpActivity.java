@@ -13,7 +13,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -114,7 +116,15 @@ public class SignUpActivity extends Activity {
 	public void initializeUIElements() {
 		mUserName = (EditText) findViewById(R.id.editText_username);
 		mUserPassword = (EditText) findViewById(R.id.editText_password);
+		// Setting the Type Face to Default as well as setting the edittext's transformation method to Password. 
+		// This overrides the font face fixing the off-font from the standard Edit Texts when using Password type EditTexts.
+		mUserPassword.setTypeface(Typeface.DEFAULT);
+		mUserPassword.setTransformationMethod(new PasswordTransformationMethod());
 		mUserVerifyPassword = (EditText) findViewById(R.id.editText_verifyPassword);
+		// Setting the Type Face to Default as well as setting the edittext's transformation method to Password. 
+		// This overrides the font face fixing the off-font from the standard Edit Texts when using Password type EditTexts.
+		mUserVerifyPassword.setTypeface(Typeface.DEFAULT);
+		mUserVerifyPassword.setTransformationMethod(new PasswordTransformationMethod());
 		mUserEmailAddress = (EditText) findViewById(R.id.editText_emailAddress);
 		mSignUpBtn = (Button) findViewById(R.id.button_sign_up);
 	}

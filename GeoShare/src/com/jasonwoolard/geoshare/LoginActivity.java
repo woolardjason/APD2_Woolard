@@ -12,6 +12,7 @@ package com.jasonwoolard.geoshare;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -29,16 +30,17 @@ import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.RequestPasswordResetCallback;
 
 public class LoginActivity extends Activity {
 
 	// Member Variables 
-	public TextView mSignUpTV;
 	public TextView mResetPwTV;
 	public EditText mUserName;
 	public EditText mUserPassword;
 	public Button mLogInBtn; 
 	public Button mLogInAsGuestBtn;
+	public Button mSignUpBtn;
 	public CheckBox mSaveUserName;
 	SharedPreferences mSharedPref;
 	public static String mUserData = "UserSavedData";
@@ -50,24 +52,71 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		// Initializing all UI Elements to be used
 		initializeUIElements();
-
-		mSignUpTV.setOnClickListener(new View.OnClickListener() {
-
+		mSignUpBtn.setOnClickListener(new View.OnClickListener() {
+			
 			@Override
 			public void onClick(View v) {
 				// Setting intent for the SignUpActivity to be launched, then starting the intent.
 				Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
 				startActivity(i);
-
 			}
 		});
 		mResetPwTV.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// Create the fragment and show it as a dialog.
-				ResetPasswordDialogFragment newFragment = ResetPasswordDialogFragment.newInstance();
-				newFragment.show(getFragmentManager(), "dialog");
+			    final Dialog dialog = new Dialog(LoginActivity.this);
+
+                dialog.setContentView(R.layout.alertdialog_resetpw);
+                dialog.setTitle("Reset Password");
+
+                final EditText resetEmail = (EditText) dialog.findViewById(R.id.editText_resetEmailAddress);
+                Button btnReset = (Button)dialog.findViewById(R.id.button_resetPW);
+                btnReset.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(final View v) {
+						// Setting inputedString to the current text in resetEmail field
+		                String inputedString = resetEmail.getText().toString();
+		                
+		                // Running Parse Request Password Reset in Background method which doesn't boggle up the main thread.
+		                ParseUser.requestPasswordResetInBackground(inputedString, new RequestPasswordResetCallback() 
+		                {
+		                	public void done(ParseException e) 
+		                	{
+		                		if (e == null) 
+		                		{
+		                			AlertDialog.Builder b = new AlertDialog.Builder(v.getContext());
+									b.setMessage(R.string.success_message_reset_pw);
+									b.setTitle(R.string.success_title_reset_pw);
+									b.setPositiveButton(android.R.string.ok, null);
+									AlertDialog d = b.create();
+									d.show();
+									  
+					               
+		                		} 
+		                		else
+		                		{
+		                			AlertDialog.Builder b = new AlertDialog.Builder(v.getContext());
+									b.setMessage(e.getMessage());
+									b.setTitle(R.string.error_title_sign_up_verify_pw);
+									b.setPositiveButton(android.R.string.ok, null);
+									AlertDialog d = b.create();
+									d.show();
+		                		}
+		                	}
+		                });
+						
+					}
+				});
+                Button btnCancel = (Button)dialog.findViewById(R.id.button_cancelResetPw);
+                btnCancel.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+                dialog.show();
 			}
 		});
 		// Obtaining Shared Preferences Data
@@ -190,7 +239,7 @@ public class LoginActivity extends Activity {
 		mUserPassword.setTransformationMethod(new PasswordTransformationMethod());
 		mLogInBtn = (Button) findViewById(R.id.button_login);
 		mSaveUserName = (CheckBox) findViewById(R.id.checkBox_saveUsername);
-		mSignUpTV = (TextView)findViewById(R.id.textView_sign_up);
+		mSignUpBtn = (Button) findViewById(R.id.button_signUp);
 		mResetPwTV = (TextView) findViewById(R.id.textView_forgot_pw);
 		mLogInAsGuestBtn = (Button) findViewById(R.id.button_browse_as_guest);
 	}
