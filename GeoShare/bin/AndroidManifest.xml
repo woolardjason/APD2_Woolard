@@ -50,11 +50,18 @@
         <activity
             android:name="com.jasonwoolard.geoshare.MyPostedSalesDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:label="@string/title_activity_my_posted_sales_detail"
             android:parentActivityName="com.jasonwoolard.geoshare.ProfileActivity"
-            android:label="@string/title_activity_my_posted_sales_detail" 
-            android:screenOrientation="portrait" >
-            
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.InboxActivity"
+            android:label="@string/title_activity_inbox" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.InboxMessageActivity"
+            android:label="@string/title_activity_inbox_message" >
         </activity>
     </application>
 

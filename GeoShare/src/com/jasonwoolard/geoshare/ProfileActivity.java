@@ -162,7 +162,14 @@ public class ProfileActivity extends Activity {
 		mGBuxAmount = (TextView) findViewById(R.id.textView_gBux_amount);
 		mPostedSalesAmount = (TextView) findViewById(R.id.textView_posted_sales_amount);
 		mUsersName = (TextView) findViewById(R.id.textView_users_name);
-		
+		mInboxAmount.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), InboxActivity.class);
+				startActivity(intent);
+			}
+		});
 	}
 	@Override
 	protected void onResume() {
@@ -191,7 +198,7 @@ public class ProfileActivity extends Activity {
 			new PullUserSalesFromParse().execute();
 			// Running Query to obtain Messages for user & updating necessary UI element
 			ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-			query.whereEqualTo("receiver", mCurrentUser);
+			query.whereEqualTo("receiver", mCurrentUser.getUsername());
 			query.findInBackground(new FindCallback<ParseObject>() {
 			    public void done(List<ParseObject> messages, ParseException e) 
 			    {
@@ -239,7 +246,7 @@ public class ProfileActivity extends Activity {
 			// Launching new intent to start Post Sale Activity
 			Intent i = new Intent(this, PostSaleActivity.class);
 			startActivity(i);
-			break;
+			break; 
 		}
 		return super.onOptionsItemSelected(item);
 	}
