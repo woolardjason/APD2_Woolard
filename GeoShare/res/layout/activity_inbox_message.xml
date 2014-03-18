@@ -9,8 +9,82 @@
     tools:context=".InboxMessageActivity" >
 
     <TextView
+        android:id="@+id/textView_sentByHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:text="Sent By: "
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textView_sentOnHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_sentByHeader"
+        android:layout_below="@+id/textView_sentByHeader"
+        android:text="Sent On: "
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textView_receivedMessageSentBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView_sentOnHeader"
+        android:layout_toRightOf="@+id/textView_sentByHeader"
+        android:text="Medium Text"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textView_receivedMessageSentOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_sentOnHeader"
+        android:layout_alignBottom="@+id/textView_sentOnHeader"
+        android:layout_toRightOf="@+id/textView_sentOnHeader"
+        android:text="Medium Text"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/textView_receivedMessageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_sentOnHeader"
+        android:layout_below="@+id/textView_sentOnHeader"
+        android:layout_marginTop="14dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_receivedMessageMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_receivedMessageTitle"
+        android:layout_below="@+id/textView_receivedMessageTitle"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="14dp"
+        android:text="Medium Text"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/button_deleteMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="14dp"
+        android:layout_marginRight="24dp"
+        android:text="Delete" />
+
+    <Button
+        android:id="@+id/button_replyToSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_deleteMessage"
+        android:layout_alignBottom="@+id/button_deleteMessage"
+        android:layout_alignLeft="@+id/textView_receivedMessageTitle"
+        android:text="Reply" />
 
 </RelativeLayout>

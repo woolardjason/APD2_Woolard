@@ -43,7 +43,7 @@
     <string name="tv_your_posted_sales">Your Posted Sales:</string>
     <string name="tv_inbox">Inbox</string>
     <string name="title_activity_my_posted_sales_detail">Item Details</string>
-    <string name="title_activity_inbox">InboxActivity</string>
-    <string name="title_activity_inbox_message">InboxMessageActivity</string>
+    <string name="title_activity_inbox">Inbox</string>
+    <string name="title_activity_inbox_message">Inbox Message</string>
 
 </resources>
