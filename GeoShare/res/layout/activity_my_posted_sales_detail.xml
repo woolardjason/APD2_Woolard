@@ -51,6 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/gradient_listview_button"
         android:text="Delete" />
 
     <TextView

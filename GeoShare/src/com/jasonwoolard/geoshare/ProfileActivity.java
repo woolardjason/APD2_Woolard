@@ -66,7 +66,7 @@ public class ProfileActivity extends Activity {
 			// Running query vs Parse DB to obtain Posted Sales from currently logged in user to display in ListView
 			ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
 			query.orderByDescending("createdAt");
-			query.whereEqualTo("postedBy", mCurrentUser);
+			query.whereEqualTo("postedBy", mCurrentUser.getUsername());
 			query.findInBackground(new FindCallback<ParseObject>() 
 			{
 				@Override

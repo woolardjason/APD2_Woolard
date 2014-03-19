@@ -30,6 +30,7 @@ public class PostSaleActivity extends Activity {
 	EditText mCaptchaInput;
 	TextView mCaptchaCode;
 	ParseUser mUser;
+	String mCurrentUser;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +70,8 @@ public class PostSaleActivity extends Activity {
 					sale.put("price", "$" + itemPrice);
 					sale.put("location", itemLocation);
 					sale.put("description", itemDescription);
-
-					sale.put("postedBy", mUser);
+					
+					sale.put("postedBy", mCurrentUser);
 					// Saving sale out to the backend
 					sale.saveInBackground(new SaveCallback()
 					{
@@ -100,6 +101,7 @@ public class PostSaleActivity extends Activity {
 	public void initializeUIElements() { 
 		
 		mUser = ParseUser.getCurrentUser();
+		mCurrentUser =  mUser.getUsername();
 		
 		mPostSaleBtn = (Button) findViewById(R.id.button_post_sale);
 

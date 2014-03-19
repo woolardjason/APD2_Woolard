@@ -50,5 +50,8 @@
     <string name="title_activity_local_sales_detail">Item Details</string>
     <string name="menu_label_local_sales">Local Sales</string>
     <string name="menu_label_your_profile">Your Profile</string>
+    <string name="title_activity_contact_seller">Contact Seller</string>
+    <string name="send_message">Send Message</string>
+    <string name="title_activity_inbox_message_reply">Reply To Message</string>
 
 </resources>

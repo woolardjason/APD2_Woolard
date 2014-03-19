@@ -74,13 +74,14 @@ public class LocalSalesActivity extends Activity {
 								map.put("location", sales.getString("location"));
 								map.put("description", sales.getString("description"));
 								map.put("oid", sales.getObjectId());
+								map.put("postedBy", sales.getString("postedBy"));
 								
 								mData.add(map);
 								
 							}
 							// Defining ListAdapter to use custom xml layout
 							ListAdapter adapter = new SimpleAdapter(LocalSalesActivity.this,
-							mData, R.layout.listview_local_sales_cell,new String[] {"title", "description", "price", "location", "oid"}, new int[] {
+							mData, R.layout.listview_local_sales_cell,new String[] {"title", "description", "price", "location", "oid", "postedBy"}, new int[] {
 									R.id.textView_listView_localSalesSubject, R.id.textView_listView_localSalesDescription, R.id.textView_listView_localSalesPrice });
 
 							mLocalSales.setAdapter(adapter);
@@ -98,6 +99,7 @@ public class LocalSalesActivity extends Activity {
 									intent.putExtra("location", hMap.get("location"));
 									intent.putExtra("description", hMap.get("description"));
 									intent.putExtra("oid", hMap.get("oid"));
+									intent.putExtra("postedBy", hMap.get("postedBy"));
 
 
 									startActivity(intent);

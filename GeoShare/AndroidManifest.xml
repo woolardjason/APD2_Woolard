@@ -79,6 +79,14 @@
             android:name="com.jasonwoolard.geoshare.LocalSalesDetailActivity"
             android:label="@string/title_activity_local_sales_detail" >
         </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.ContactSellerActivity"
+            android:label="@string/title_activity_contact_seller" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.InboxMessageReplyActivity"
+            android:label="@string/title_activity_inbox_message_reply" >
+        </activity>
     </application>
 
 </manifest>

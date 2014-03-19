@@ -23,6 +23,7 @@ public class LocalSalesDetailActivity extends Activity {
 	String mDataPrice;
 	String mDataLocation;
 	String mDataDetails;
+	String mDataPostedBy;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,8 @@ public class LocalSalesDetailActivity extends Activity {
 		mDataLocation = intent.getStringExtra("location");
 		mDataDetails = intent.getStringExtra("description");
 		mDataObjectId = intent.getStringExtra("oid");
-		
+		mDataPostedBy = intent.getStringExtra("postedBy");
+
 		initializeUIElements();
 		
 		mItemName.setText(mDataTitle);
@@ -52,7 +54,13 @@ public class LocalSalesDetailActivity extends Activity {
 		mContactSeller.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), ContactSellerActivity.class);
 				
+				intent.putExtra("title", mDataTitle);
+				intent.putExtra("oid", mDataObjectId);
+				intent.putExtra("postedBy", mDataPostedBy);
+
+				startActivity(intent);
 			}
 		});
 	}
