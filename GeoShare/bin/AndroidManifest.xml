@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -59,17 +59,25 @@
             android:name="com.jasonwoolard.geoshare.InboxActivity"
             android:label="@string/title_activity_inbox"
             android:parentActivityName="com.jasonwoolard.geoshare.ProfileActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.InboxMessageActivity"
-            android:label="@string/title_activity_inbox_message" 
+            android:label="@string/title_activity_inbox_message"
             android:parentActivityName="com.jasonwoolard.geoshare.InboxActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.WatchingSalesActivity"
+            android:label="@string/title_activity_watching_sales" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.LocalSalesActivity"
+            android:label="@string/title_activity_local_sales" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.LocalSalesDetailActivity"
+            android:label="@string/title_activity_local_sales_detail" >
         </activity>
     </application>
 

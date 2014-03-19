@@ -7,9 +7,14 @@
         android:title="@string/menu_label_log_out"/>
     <item
         android:id="@+id/action_profile_activity"
-        android:orderInCategory="200"
         android:showAsAction="always"
         android:icon="@drawable/ic_action_person"
-        android:title="Your Profile"/>
+        android:title="@string/menu_label_your_profile"/>
+    <item
+        android:id="@+id/action_local_sales"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_place"
+        android:title="@string/menu_label_local_sales"/>
+    
 
 </menu>

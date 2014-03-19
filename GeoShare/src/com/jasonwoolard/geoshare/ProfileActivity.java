@@ -113,7 +113,6 @@ public class ProfileActivity extends Activity {
 									intent.putExtra("description", hMap.get("description"));
 									intent.putExtra("oid", hMap.get("oid"));
 
-
 									startActivity(intent);
 								}
 							});
@@ -247,6 +246,9 @@ public class ProfileActivity extends Activity {
 			Intent i = new Intent(this, PostSaleActivity.class);
 			startActivity(i);
 			break; 
+		case R.id.action_local_sales:
+			Intent intent = new Intent(this, LocalSalesActivity.class);
+			startActivity(intent);
 		}
 		return super.onOptionsItemSelected(item);
 	}

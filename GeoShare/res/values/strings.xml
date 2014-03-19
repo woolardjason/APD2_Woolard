@@ -45,5 +45,10 @@
     <string name="title_activity_my_posted_sales_detail">Item Details</string>
     <string name="title_activity_inbox">Inbox</string>
     <string name="title_activity_inbox_message">Inbox Message</string>
+    <string name="title_activity_watching_sales">Watching Sales</string>
+    <string name="title_activity_local_sales">Local Sales</string>
+    <string name="title_activity_local_sales_detail">Item Details</string>
+    <string name="menu_label_local_sales">Local Sales</string>
+    <string name="menu_label_your_profile">Your Profile</string>
 
 </resources>

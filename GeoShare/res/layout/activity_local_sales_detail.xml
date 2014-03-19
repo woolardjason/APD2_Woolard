@@ -1,0 +1,119 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="#acacac"
+    
+    tools:context=".LocalSalesDetailActivity" >
+
+<ImageView
+        android:id="@+id/imageView_localSalesDetailPhoto"
+        android:layout_width="125sp"
+        android:layout_height="125sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/textView_localSalesDetailTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView_localSalesDetailPhoto"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/imageView_localSalesDetailPhoto"
+        android:text="Item Name"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="#FFFFFF"
+        android:background="#336699"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_localSalesDetailPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/textView_localSalesDetailLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/TextView01"
+        android:layout_alignBottom="@+id/TextView01"
+        android:layout_toRightOf="@+id/TextView01"
+        android:text="" />
+
+    <Button
+        android:id="@+id/button_localSalesDetailContactSeller"
+        android:layout_marginTop="19dp"
+        android:layout_width="wrap_content"
+        android:textStyle="bold" 
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/view_seperatorView"
+        android:layout_below="@+id/imageView_localSalesDetailPhoto"
+        android:textSize="13sp"
+        android:background="@drawable/gradient_buttons"
+        android:text="Contact Seller" />
+	<View
+        android:id="@+id/view_seperatorView"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_margin="1dp"
+        android:layout_centerHorizontal="true" />
+    
+    <Button
+        android:id="@+id/button_localSalesDetailWatchItem"
+        android:layout_width="wrap_content"
+        android:textStyle="bold" 
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/view_seperatorView"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/button_localSalesDetailContactSeller"
+        android:textSize="13sp"
+        android:background="@drawable/gradient_buttons"
+        android:text="Watch Item" />
+    
+    <TextView
+        android:id="@+id/textView_localSalesDetailItemDetailsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button_localSalesDetailContactSeller"
+        android:layout_below="@+id/button_localSalesDetailContactSeller"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="Item Details: " />
+
+    <TextView
+        android:id="@+id/textView_localSalesDetailDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_localSalesDetailItemDetailsHeader"
+        android:layout_below="@+id/textView_localSalesDetailItemDetailsHeader"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView_localSalesDetailPhoto"
+        android:layout_alignLeft="@+id/textView_localSalesDetailTitle"
+        android:text="Location: "
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView_localSalesDetailLocation"
+        android:layout_alignLeft="@+id/TextView01"
+        android:text="Asking Price: "
+        android:textStyle="bold" />
+
+</RelativeLayout>

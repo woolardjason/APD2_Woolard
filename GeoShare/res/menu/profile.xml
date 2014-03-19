@@ -10,4 +10,9 @@
         android:showAsAction="always"
         android:icon="@drawable/ic_action_new"
         android:title="@string/menu_label_post_sale"/>
+	<item
+        android:id="@+id/action_local_sales"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_place"
+        android:title="@string/menu_label_local_sales"/>
 </menu>

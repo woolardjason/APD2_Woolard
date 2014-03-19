@@ -139,7 +139,11 @@ public class PostSaleActivity extends Activity {
 		case R.id.action_profile_activity:
 			finish();
 			break;
+		case R.id.action_local_sales:
+			Intent intent = new Intent(this, LocalSalesActivity.class);
+			startActivity(intent);
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 }

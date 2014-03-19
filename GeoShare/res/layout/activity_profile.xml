@@ -17,7 +17,7 @@
         android:layout_alignParentTop="true"
         android:text="Welcome,"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+ 
     <TextView
         android:id="@+id/textView_users_name"
         android:layout_width="wrap_content"
