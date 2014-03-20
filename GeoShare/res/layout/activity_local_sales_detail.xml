@@ -52,13 +52,12 @@
         android:id="@+id/button_localSalesDetailContactSeller"
         android:layout_marginTop="19dp"
         android:layout_width="wrap_content"
-        android:textStyle="bold" 
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/view_seperatorView"
         android:layout_below="@+id/imageView_localSalesDetailPhoto"
         android:textSize="13sp"
-        android:background="@drawable/gradient_buttons"
+        android:background="@drawable/gradient_listview_button"
         android:text="Contact Seller" />
 	<View
         android:id="@+id/view_seperatorView"
@@ -70,13 +69,12 @@
     <Button
         android:id="@+id/button_localSalesDetailWatchItem"
         android:layout_width="wrap_content"
-        android:textStyle="bold" 
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/view_seperatorView"
         android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/button_localSalesDetailContactSeller"
         android:textSize="13sp"
-        android:background="@drawable/gradient_buttons"
+        android:background="@drawable/gradient_listview_button"
         android:text="Watch Item" />
     
     <TextView

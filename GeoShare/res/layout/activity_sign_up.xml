@@ -52,7 +52,7 @@
         android:id="@+id/button_sign_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_buttons"
+        android:background="@drawable/gradient_listview_button"
         android:layout_alignLeft="@+id/editText_emailAddress"
         android:layout_alignRight="@+id/editText_emailAddress"
         android:layout_below="@+id/editText_emailAddress"

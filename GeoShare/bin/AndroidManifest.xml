@@ -77,15 +77,18 @@
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.LocalSalesDetailActivity"
-            android:label="@string/title_activity_local_sales_detail" >
+            android:label="@string/title_activity_local_sales_detail"
+            android:parentActivityName="com.jasonwoolard.geoshare.LocalSalesActivity" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.ContactSellerActivity"
-            android:label="@string/title_activity_contact_seller" >
+            android:label="@string/title_activity_contact_seller"
+            android:parentActivityName="com.jasonwoolard.geoshare.LocalSalesDetailActivity" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.InboxMessageReplyActivity"
-            android:label="@string/title_activity_inbox_message_reply" >
+            android:label="@string/title_activity_inbox_message_reply"
+            android:parentActivityName="com.jasonwoolard.geoshare.InboxMessageActivity" >
         </activity>
     </application>
 

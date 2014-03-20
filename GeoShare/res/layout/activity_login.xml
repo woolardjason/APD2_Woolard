@@ -59,14 +59,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="1sp"
         android:layout_below="@+id/checkBox_saveUsername"
-        android:background="@drawable/gradient_buttons"
+        android:background="@drawable/gradient_listview_button"
         android:text="@string/btn_login"
         android:textSize="13sp" />
 
     <Button
         android:id="@+id/button_signUp"
  		android:textSize="13sp"
-        android:background="@drawable/gradient_buttons"
+        android:background="@drawable/gradient_listview_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button_login"
@@ -95,7 +95,7 @@
         android:id="@+id/button_browse_as_guest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_buttons"
+        android:background="@drawable/gradient_listview_button"
         android:layout_below="@+id/textView_or"
         android:text="@string/btn_login_as_guest"
         android:textSize="12sp" />

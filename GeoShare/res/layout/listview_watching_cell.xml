@@ -27,7 +27,7 @@
          />
     
      <TextView
-         android:id="@+id/textView_listView_watchingDate"
+         android:id="@+id/textView_listView_watchingPrice"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_alignParentRight="true"

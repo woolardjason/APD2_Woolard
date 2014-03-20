@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView_sentOnHeader"
         android:layout_toRightOf="@+id/textView_sentByHeader"
-        android:text="Medium Text"
+        android:text=""
         android:textSize="14sp" />
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_alignBaseline="@+id/textView_sentOnHeader"
         android:layout_alignBottom="@+id/textView_sentOnHeader"
         android:layout_toRightOf="@+id/textView_sentOnHeader"
-        android:text="Medium Text"
+        android:text=""
         android:textSize="14sp" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:layout_alignLeft="@+id/textView_sentOnHeader"
         android:layout_below="@+id/textView_sentOnHeader"
         android:layout_marginTop="14dp"
-        android:text="TextView"
+        android:text=""
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -66,7 +66,7 @@
         android:layout_below="@+id/textView_receivedMessageTitle"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="14dp"
-        android:text="Medium Text"
+        android:text=""
         android:textSize="16sp" />
 
     <Button
@@ -74,18 +74,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="14dp"
-        android:layout_marginRight="24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/view1"
+        android:background="@drawable/gradient_listview_button"
         android:text="Delete" />
 
+	<View
+        android:id="@+id/view1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_margin="1dp"
+        android:layout_centerHorizontal="true" />
     <Button
         android:id="@+id/button_replyToSender"
+        android:background="@drawable/gradient_listview_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/button_deleteMessage"
-        android:layout_alignBottom="@+id/button_deleteMessage"
-        android:layout_alignLeft="@+id/textView_receivedMessageTitle"
+        android:layout_toRightOf="@+id/view1"
         android:text="Reply" />
 
 </RelativeLayout>

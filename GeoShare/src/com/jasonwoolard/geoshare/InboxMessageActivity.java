@@ -22,6 +22,10 @@ public class InboxMessageActivity extends Activity {
 	Button mReplyToSender;
 	Button mDeleteMessage;
 	String mMessageOid;
+	String mMessageMessage;
+	String mMessageDate;
+	String mMessageSender;
+	String mMessageSubject;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +34,10 @@ public class InboxMessageActivity extends Activity {
 		
 		Intent intent = getIntent();
 		
-		String messageSubject = intent.getStringExtra("subject");
-		String messageSender = intent.getStringExtra("sender");
-		String messageDate = intent.getStringExtra("date");
-		String messageMessage = intent.getStringExtra("message");
+		mMessageSubject = intent.getStringExtra("subject");
+		mMessageSender = intent.getStringExtra("sender");
+		mMessageDate = intent.getStringExtra("date");
+		mMessageMessage = intent.getStringExtra("message");
 		mMessageOid = intent.getStringExtra("oid");
 		
 		mSenderName = (TextView) findViewById(R.id.textView_receivedMessageSentBy);
@@ -43,11 +47,14 @@ public class InboxMessageActivity extends Activity {
 		mReplyToSender = (Button) findViewById(R.id.button_replyToSender);
 		mDeleteMessage = (Button) findViewById(R.id.button_deleteMessage);
 		mReplyToSender.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				Intent intent = new Intent(getApplicationContext(), InboxMessageReplyActivity.class);
 				
+				intent.putExtra("oid", mMessageOid);
+				intent.putExtra("sender", mMessageSender);
+
+				startActivity(intent);
 			}
 		});
 		mDeleteMessage.setOnClickListener(new View.OnClickListener() {
@@ -71,10 +78,10 @@ public class InboxMessageActivity extends Activity {
 			}
 		});
 		
-		mSenderName.setText(messageSender);
-		mSenderDate.setText(messageDate);
-		mSenderSubject.setText(messageSubject);
-		mSenderMessage.setText(messageMessage);
+		mSenderName.setText(mMessageSender);
+		mSenderDate.setText(mMessageDate);
+		mSenderSubject.setText(mMessageSubject);
+		mSenderMessage.setText(mMessageMessage);
 		
 	}
 	@Override

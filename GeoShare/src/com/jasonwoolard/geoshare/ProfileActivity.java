@@ -36,6 +36,7 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 public class ProfileActivity extends Activity {
@@ -51,6 +52,7 @@ public class ProfileActivity extends Activity {
 	String mPostedSales;
 	TextView mPostedSalesAmount;
 	TextView mUsersName;
+	ParseRelation<ParseObject> mWatchingRelation;
 	
 	private class PullUserSalesFromParse extends AsyncTask<Void, Integer, Void> {
 		protected Void doInBackground(Void... params) {
@@ -158,6 +160,14 @@ public class ProfileActivity extends Activity {
 		mUserSales = (ListView) findViewById(R.id.listView1);
 		mInboxAmount = (TextView) findViewById(R.id.textView_inbox_amount);
 		mWatchingAmount = (TextView) findViewById(R.id.textView_watching_amount);
+		mWatchingAmount.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), WatchingSalesActivity.class);
+				startActivity(intent);				
+			}
+		});
 		mGBuxAmount = (TextView) findViewById(R.id.textView_gBux_amount);
 		mPostedSalesAmount = (TextView) findViewById(R.id.textView_posted_sales_amount);
 		mUsersName = (TextView) findViewById(R.id.textView_users_name);
@@ -174,6 +184,8 @@ public class ProfileActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		mCurrentUser = ParseUser.getCurrentUser();
+		mWatchingRelation = mCurrentUser.getRelation("Watching");
+
 		// Parse Analytics - (User data)
 		ParseAnalytics.trackAppOpened(getIntent());
 		
@@ -213,6 +225,24 @@ public class ProfileActivity extends Activity {
 			        }
 			    }
 			});
+			// Running query against Parse DB to obtain Watching Items for currently logged in user to display in a ListView.
+			mWatchingRelation.getQuery().findInBackground(new FindCallback<ParseObject>() 
+			{
+				@Override
+				public void done(List<ParseObject> objects, ParseException e) 
+				{
+					if (e == null) 
+					{
+					mWatchingAmount.setText(Integer.toString(objects.size()));
+		            Log.i(mTAG, "Retrieved " + objects.size() + " watching items!");
+
+					}
+					else
+					{
+						Log.i(mTAG, e.getMessage());
+					}
+				}
+			});			
 		}
 	
 	}
