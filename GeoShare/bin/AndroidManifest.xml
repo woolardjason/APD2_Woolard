@@ -59,36 +59,59 @@
             android:name="com.jasonwoolard.geoshare.InboxActivity"
             android:label="@string/title_activity_inbox"
             android:parentActivityName="com.jasonwoolard.geoshare.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.InboxMessageActivity"
             android:label="@string/title_activity_inbox_message"
             android:parentActivityName="com.jasonwoolard.geoshare.InboxActivity"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.WatchingSalesActivity"
-            android:label="@string/title_activity_watching_sales" >
+            android:label="@string/title_activity_watching_sales" 
+            android:parentActivityName="com.jasonwoolard.geoshare.ProfileActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.LocalSalesActivity"
-            android:label="@string/title_activity_local_sales" >
+            android:label="@string/title_activity_local_sales" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.LocalSalesDetailActivity"
             android:label="@string/title_activity_local_sales_detail"
-            android:parentActivityName="com.jasonwoolard.geoshare.LocalSalesActivity" >
+            android:parentActivityName="com.jasonwoolard.geoshare.LocalSalesActivity" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.ContactSellerActivity"
             android:label="@string/title_activity_contact_seller"
-            android:parentActivityName="com.jasonwoolard.geoshare.LocalSalesDetailActivity" >
+            android:parentActivityName="com.jasonwoolard.geoshare.LocalSalesDetailActivity" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="com.jasonwoolard.geoshare.InboxMessageReplyActivity"
             android:label="@string/title_activity_inbox_message_reply"
-            android:parentActivityName="com.jasonwoolard.geoshare.InboxMessageActivity" >
+            android:parentActivityName="com.jasonwoolard.geoshare.InboxMessageActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.WatchingSalesDetailActivity"
+            android:label="@string/title_activity_watching_sales_detail" 
+            android:parentActivityName="com.jasonwoolard.geoshare.WatchingSalesActivity" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+            
         </activity>
     </application>
 

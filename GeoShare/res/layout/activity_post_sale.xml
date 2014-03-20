@@ -17,6 +17,7 @@
         android:layout_alignParentTop="true"
         android:ems="10"
         android:hint="@string/et_item_name"
+        android:textColorHint="#FFFFFF"
 		android:lines="1"
         android:textSize="15sp" >
 
@@ -27,6 +28,7 @@
         android:id="@+id/editText_item_price"
         android:textSize="15sp"
         android:layout_width="wrap_content"
+        android:textColorHint="#FFFFFF"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText_item_title"
         android:layout_below="@+id/editText_item_title"
@@ -37,6 +39,7 @@
     <EditText
         android:id="@+id/editText_item_location"
         android:textSize="15sp"
+        android:textColorHint="#FFFFFF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText_item_price"
@@ -82,6 +85,7 @@
         android:layout_alignBaseline="@+id/textView_captcha_code"
         android:layout_alignBottom="@+id/textView_captcha_code"
         android:layout_centerHorizontal="true"
+        android:textSize="12sp"
         android:ems="10" />
 
     <EditText
@@ -92,17 +96,19 @@
         android:layout_alignRight="@+id/editText_item_location"
         android:layout_below="@+id/editText_item_location"
         android:layout_marginTop="23dp"
+        android:textColorHint="#FFFFFF"
         android:ems="10"
         android:hint="Item Description"
         android:textSize="15sp" />
 
     <Button
         android:id="@+id/button_post_sale"
-        android:layout_width="wrap_content"
+        android:layout_width="80sp"
         android:layout_height="wrap_content"
+        android:background="@drawable/gradient_listview_button"
         android:layout_alignRight="@+id/editText_item_description"
         android:layout_below="@+id/textView_enter_captcha"
         android:text="Post Sale"
-        android:textSize="12sp" />
+        android:textSize="15sp" />
 
 </RelativeLayout>

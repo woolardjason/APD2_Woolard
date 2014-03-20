@@ -18,22 +18,23 @@
          android:textStyle="bold" />
       <TextView
          android:id="@+id/textView_listView_watchingDescription"
-         android:layout_width="wrap_content"
+         android:layout_width="210sp"
          android:layout_marginTop="5sp"
+         android:lines="1"
          android:layout_height="wrap_content"
          android:layout_below="@+id/textView_listView_watchingSubject"
-         android:textColor="#EFEFEF"
-         android:textSize="10sp"
+         android:textColor="#6B6B6B"
+         android:textSize="11sp"
          />
     
      <TextView
          android:id="@+id/textView_listView_watchingPrice"
-         android:layout_width="wrap_content"
+  		 android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_alignParentRight="true"
          android:layout_centerVertical="true"
          android:gravity="center_vertical"
-         android:textColor="#FFFFFF"
+         android:textColor="#216C2A"
          android:textSize="14sp"
          android:textStyle="bold" />
 

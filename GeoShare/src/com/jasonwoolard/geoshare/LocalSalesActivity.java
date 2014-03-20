@@ -1,3 +1,12 @@
+/*
+ * Project		GeoShare
+ * 
+ * Package		com.jasonwoolard.geoshare
+ * 
+ * @author		Jason Woolard
+ * 
+ * Date			Mar 20, 2014
+ */
 package com.jasonwoolard.geoshare;
 
 import java.util.ArrayList;
@@ -34,9 +43,11 @@ public class LocalSalesActivity extends Activity {
 	TextView mLocalSaleSubject;
 	TextView mLocalSaleDescription;
 	TextView mLocalSalePrice;
+	TextView mPostedSalesAmount;
 	ProgressDialog mProgressDialog;
 	ParseUser mCurrentUser;
 	String mTAG = "LocalSalesActivity";
+	String mPostedSales;
 	
 	
 	private class PullLocalSalesFromParse extends AsyncTask<Void, Integer, Void> {
@@ -63,8 +74,8 @@ public class LocalSalesActivity extends Activity {
 						if (objects.toArray().length > 0)
 						{
 							mData = new ArrayList<Map<String, String>>();
-					//	    mPostedSales = Integer.toString(objects.toArray().length);
-					//	    mPostedSalesAmount.setText("(" + mPostedSales + ")");
+						    mPostedSales = Integer.toString(objects.toArray().length);
+						    mPostedSalesAmount.setText("(" + mPostedSales + ")");
 						    for (int i=0; i < objects.toArray().length; i++)
 							{			
 								ParseObject sales = objects.get(i);
@@ -100,7 +111,6 @@ public class LocalSalesActivity extends Activity {
 									intent.putExtra("description", hMap.get("description"));
 									intent.putExtra("oid", hMap.get("oid"));
 									intent.putExtra("postedBy", hMap.get("postedBy"));
-
 
 									startActivity(intent);
 								}
@@ -149,12 +159,11 @@ public class LocalSalesActivity extends Activity {
 		mLocalSaleSubject = (TextView) findViewById(R.id.textView_listView_localSalesSubject);
 		mLocalSaleDescription = (TextView) findViewById(R.id.textView_listView_localSalesDescription);
 		mLocalSalePrice = (TextView) findViewById(R.id.textView_listView_localSalesPrice);
+		mPostedSalesAmount = (TextView) findViewById(R.id.textView_localSalesAmount);
 		mCurrentUser = ParseUser.getCurrentUser();
-		
 		
 	}
 
-	
 	@Override
 	protected void onResume() {
 		super.onResume();

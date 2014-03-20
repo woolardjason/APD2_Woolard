@@ -1,3 +1,12 @@
+/*
+ * Project		GeoShare
+ * 
+ * Package		com.jasonwoolard.geoshare
+ * 
+ * @author		Jason Woolard
+ * 
+ * Date			Mar 20, 2014
+ */
 package com.jasonwoolard.geoshare;
 
 import java.util.ArrayList;
@@ -7,6 +16,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,13 +79,14 @@ public class WatchingSalesActivity extends Activity {
 								map.put("price", watches.getString("price"));
 								map.put("location", watches.getString("location"));
 								map.put("description", watches.getString("description"));
+								map.put("postedBy", watches.getString("postedBy"));
 								map.put("oid", watches.getObjectId());
 								
 								mData.add(map);
 							}
 							// Defining ListAdapter to use custom xml layout
 							ListAdapter adapter = new SimpleAdapter(WatchingSalesActivity.this,
-							mData, R.layout.listview_watching_cell,new String[] {"title", "description", "price", "oid"}, new int[] {
+							mData, R.layout.listview_watching_cell,new String[] {"title", "description", "price", "oid", "postedBy"}, new int[] {
 									R.id.textView_listView_watchingSubject, R.id.textView_listView_watchingDescription, R.id.textView_listView_watchingPrice });
 
 							mWatchingList.setAdapter(adapter);
@@ -83,19 +94,20 @@ public class WatchingSalesActivity extends Activity {
 
 								@Override
 								public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-//									@SuppressWarnings("unchecked")
-//									HashMap<String, String> hMap = (HashMap<String, String>) mWatchingList.getItemAtPosition(pos);
-//									
-//									Intent intent = new Intent(getApplicationContext(), InboxMessageActivity.class);
-//									
-//									intent.putExtra("subject", hMap.get("subject"));
-//									intent.putExtra("date", hMap.get("date"));
-//									intent.putExtra("message", hMap.get("message"));
-//									intent.putExtra("receiver", hMap.get("receiver"));
-//									intent.putExtra("sender", hMap.get("sender"));
-//									intent.putExtra("oid", hMap.get("oid"));
-//
-//									startActivity(intent);
+									@SuppressWarnings("unchecked")
+									HashMap<String, String> hMap = (HashMap<String, String>) mWatchingList.getItemAtPosition(pos);
+									
+									Intent intent = new Intent(getApplicationContext(), WatchingSalesDetailActivity.class);
+									
+									intent.putExtra("title", hMap.get("title"));
+									intent.putExtra("price",hMap.get("price"));
+									intent.putExtra("location", hMap.get("location"));
+									intent.putExtra("description", hMap.get("description"));
+									intent.putExtra("oid", hMap.get("oid"));
+									intent.putExtra("postedBy", hMap.get("postedBy"));
+
+
+									startActivity(intent);
 								}
 							});
 						}

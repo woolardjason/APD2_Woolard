@@ -1,12 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" 
-         xmlns:geoshare="http://schemas.android.com/apk/res-auto" >
+      xmlns:geoshare="http://schemas.android.com/apk/res-auto" >
+    
+
     
     <item
-        android:id="@+id/action_share_others_item"
+        android:id="@+id/action_share_watching_item"
         android:orderInCategory="100"
         geoshare:showAsAction="always"
         android:icon="@drawable/ic_action_share"
         geoshare:actionProviderClass="android.support.v7.widget.ShareActionProvider"
         android:title="Share Posted Item"/>
-
+    
 </menu>

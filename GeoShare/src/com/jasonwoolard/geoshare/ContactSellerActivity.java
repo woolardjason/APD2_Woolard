@@ -1,3 +1,12 @@
+/*
+ * Project		GeoShare
+ * 
+ * Package		com.jasonwoolard.geoshare
+ * 
+ * @author		Jason Woolard
+ * 
+ * Date			Mar 20, 2014
+ */
 package com.jasonwoolard.geoshare;
 
 import com.parse.ParseException;
@@ -22,6 +31,7 @@ public class ContactSellerActivity extends Activity {
 	String mDataItemOid;
 	String mDataSellerName;
 	ParseUser mCurrentUser;
+	String mTAG = "ContactSellerActivity";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -1,3 +1,12 @@
+/*
+ * Project		GeoShare
+ * 
+ * Package		com.jasonwoolard.geoshare
+ * 
+ * @author		Jason Woolard
+ * 
+ * Date			Mar 20, 2014
+ */
 package com.jasonwoolard.geoshare;
 
 import android.annotation.SuppressLint;
@@ -19,7 +28,9 @@ import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 
+
 public class MyPostedSalesDetailActivity extends ActionBarActivity  {
+	
 	TextView mItemName;
 	TextView mItemPrice;
 	TextView mItemLocation;
@@ -29,9 +40,12 @@ public class MyPostedSalesDetailActivity extends ActionBarActivity  {
 	String mObjectId;
 	String mPassedItemsName;
 	String mPassedItemsPrice;
-	
+
 	private ShareActionProvider mProvider;
+	
 	String mTAG = "MyPostedSalesDetailActivity";
+	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -78,6 +92,7 @@ public class MyPostedSalesDetailActivity extends ActionBarActivity  {
 		
 	}
 
+	
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -90,8 +105,7 @@ public class MyPostedSalesDetailActivity extends ActionBarActivity  {
 		{
 			 Intent intent = new Intent(Intent.ACTION_SEND);
 			 intent.setType("text/plain");
-			 intent.putExtra(Intent.EXTRA_TEXT, mPassedItemsName + " has been posted via Android's GeoShare app for only a whopping " + mPassedItemsPrice + " bucks!" + "\n" + "Get it while you can by downloading the app today!"
-);
+			 intent.putExtra(Intent.EXTRA_TEXT, "'" + mPassedItemsName + "'" + " has been posted via Android's GeoShare app for only a whopping " + mPassedItemsPrice + " bucks!" + "\n" + "Get it while you can by downloading the app today!");
 			  mProvider.setShareIntent(intent);
 		}
 		return true;

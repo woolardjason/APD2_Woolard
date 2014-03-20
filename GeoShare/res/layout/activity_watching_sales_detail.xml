@@ -1,0 +1,117 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#acacac"
+    tools:context=".WatchingSalesDetailActivity" >
+
+    
+	<ImageView
+        android:id="@+id/imageView_watchingSalesDetailPhoto"
+        android:layout_width="125sp"
+        android:layout_height="125sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/textView_watchingSalesDetailTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView_watchingSalesDetailPhoto"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/imageView_watchingSalesDetailPhoto"
+        android:text="Item Name"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:textColor="#FFFFFF"
+        android:background="#336699"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_watchingSalesDetailPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_watchingSalesDetailItemPriceHeader"
+        android:layout_alignBottom="@+id/textView_watchingSalesDetailItemPriceHeader"
+        android:layout_toRightOf="@+id/textView_watchingSalesDetailItemPriceHeader"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/textView_watchingSalesDetailLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_watchingSalesDetailItemLocationHeader"
+        android:layout_alignBottom="@+id/textView_watchingSalesDetailItemLocationHeader"
+        android:layout_toRightOf="@+id/textView_watchingSalesDetailItemLocationHeader"
+        android:text="" />
+
+    <Button
+        android:id="@+id/button_watchingSalesDetailContactSeller"
+        android:layout_marginTop="19dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/view_seperatorView"
+        android:layout_below="@+id/imageView_watchingSalesDetailPhoto"
+        android:textSize="13sp"
+        android:background="@drawable/gradient_listview_button"
+        android:text="Contact Seller" />
+	<View
+        android:id="@+id/view_seperatorView"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_margin="1dp"
+        android:layout_centerHorizontal="true" />
+    
+    <Button
+        android:id="@+id/button_watchingSalesDetailUnwatchItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/view_seperatorView"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/button_watchingSalesDetailContactSeller"
+        android:textSize="13sp"
+        android:background="@drawable/gradient_listview_button"
+        android:text="Do Not Watch" />
+    
+    <TextView
+        android:id="@+id/textView_watchingSalesDetailItemDetailsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button_watchingSalesDetailContactSeller"
+        android:layout_below="@+id/button_watchingSalesDetailContactSeller"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="Item Details: " />
+
+    <TextView
+        android:id="@+id/textView_watchingSalesDetailDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_watchingSalesDetailItemDetailsHeader"
+        android:layout_below="@+id/textView_watchingSalesDetailItemDetailsHeader"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/textView_watchingSalesDetailItemLocationHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView_watchingSalesDetailPhoto"
+        android:layout_alignLeft="@+id/textView_watchingSalesDetailTitle"
+        android:text="Location: "
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView_watchingSalesDetailItemPriceHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView_watchingSalesDetailLocation"
+        android:layout_alignLeft="@+id/textView_watchingSalesDetailItemLocationHeader"
+        android:text="Asking Price: "
+        android:textStyle="bold" />
+
+</RelativeLayout>

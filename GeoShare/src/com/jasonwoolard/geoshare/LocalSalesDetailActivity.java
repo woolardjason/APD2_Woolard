@@ -1,11 +1,23 @@
+/*
+ * Project		GeoShare
+ * 
+ * Package		com.jasonwoolard.geoshare
+ * 
+ * @author		Jason Woolard
+ * 
+ * Date			Mar 20, 2014
+ */
 package com.jasonwoolard.geoshare;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,7 +31,7 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-public class LocalSalesDetailActivity extends Activity {
+public class LocalSalesDetailActivity extends ActionBarActivity {
 
 	TextView mItemName;
 	TextView mItemPrice;
@@ -38,11 +50,13 @@ public class LocalSalesDetailActivity extends Activity {
 	ParseUser mCurrentUser;
 	String mTAG ="LocalSalesDetailActivity";
 	
+	private ShareActionProvider mProvider;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_local_sales_detail);
-		
+		mActionBar = getSupportActionBar();
 		Intent intent = getIntent();
 		
 		mDataTitle = intent.getStringExtra("title");
@@ -74,8 +88,7 @@ public class LocalSalesDetailActivity extends Activity {
 							public void done(ParseException e) {
 								if (e == null)
 								{
-									// Closing Activity and displaying Toast Notification that the sale was posted successfully.
-									finish();
+									// Displaying Toast Notification that the sale was successfully added to Watch List
 									Toast.makeText(getApplicationContext(), "You have successfully added the item " +  "'" + mDataTitle + "'" + " to your Watch List!", Toast.LENGTH_LONG).show();
 									
 								}
@@ -108,7 +121,7 @@ public class LocalSalesDetailActivity extends Activity {
 		});
 	}
 
-	public void initializeUIElements() {
+	private void initializeUIElements() {
 		mItemName = (TextView) findViewById(R.id.textView_localSalesDetailTitle);
 		mItemPrice = (TextView) findViewById(R.id.textView_localSalesDetailPrice);
 		mItemLocation = (TextView) findViewById(R.id.textView_localSalesDetailLocation);
@@ -129,6 +142,16 @@ public class LocalSalesDetailActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.local_sales_detail, menu);
+		// Locate MenuItem with ShareActionProvider
+		MenuItem item = menu.findItem(R.id.action_share_others_item);
+		mProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+		if(mProvider != null )
+		{
+			 Intent intent = new Intent(Intent.ACTION_SEND);
+			 intent.setType("text/plain");
+			 intent.putExtra(Intent.EXTRA_TEXT, "'"+ mDataTitle + "'" +  " has been posted via Android's GeoShare app for only a whopping " + mDataPrice + " bucks!" + "\n" + "Get it while you can by downloading the app today!");
+			 mProvider.setShareIntent(intent);
+		}
 		return true;
 	}
 

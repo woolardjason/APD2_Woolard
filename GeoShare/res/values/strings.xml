@@ -53,5 +53,6 @@
     <string name="title_activity_contact_seller">Contact Seller</string>
     <string name="send_message">Send Message</string>
     <string name="title_activity_inbox_message_reply">Reply To Message</string>
+    <string name="title_activity_watching_sales_detail">Item Details</string>
 
 </resources>

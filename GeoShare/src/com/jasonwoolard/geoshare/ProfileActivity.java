@@ -184,7 +184,7 @@ public class ProfileActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 		mCurrentUser = ParseUser.getCurrentUser();
-		mWatchingRelation = mCurrentUser.getRelation("Watching");
+		
 
 		// Parse Analytics - (User data)
 		ParseAnalytics.trackAppOpened(getIntent());
@@ -197,6 +197,7 @@ public class ProfileActivity extends Activity {
 		}
 		else
 		{
+			mWatchingRelation = mCurrentUser.getRelation("Watching");
 			// Print their username to LogCat for debugging purposes
 			Log.i(mTAG, mCurrentUser.getUsername());
 			// Setting users username to the associated UI Element for Welcome Text

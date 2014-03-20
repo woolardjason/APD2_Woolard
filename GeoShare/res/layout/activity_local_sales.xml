@@ -2,29 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#acacac"
     tools:context=".LocalSalesActivity" >
-    <TextView
-        android:id="@+id/textView_localSalesAmount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView_localSalesHeader"
-        android:layout_alignBottom="@+id/textView_localSalesHeader"
-        android:layout_toRightOf="@+id/textView_localSalesHeader"
-        android:text="(0)" 
-        android:padding="10dp"
-        android:textSize="18sp"
-        android:textColor="#FFFFFF"
-        android:background="#336699" />
-    
-    <ListView
-        android:id="@+id/listView_localSales"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:layout_below="@+id/textView_localSalesHeader" >
-    </ListView>
 
-    <TextView
-        android:id="@+id/textView_localSalesHeader"
+       <TextView
+        android:id="@+id/textView_localHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -32,9 +14,27 @@
         android:background="#336699"
         android:gravity="center_vertical"
         android:padding="10dp"
-        android:text="Sales Around You:"
+        android:text="Sales Around You: "
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />
+
+    <ListView
+        android:id="@+id/listView_localSales"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView_localHeader" />
+
+    <TextView
+        android:id="@+id/textView_localSalesAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/listView_localSales"
+        android:layout_alignParentRight="true"
+        android:background="#336699"
+        android:padding="10dp"
+        android:text="(0)"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
 </RelativeLayout>
