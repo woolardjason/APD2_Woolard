@@ -10,6 +10,8 @@
 package com.jasonwoolard.geoshare;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -57,33 +59,52 @@ public class MyPostedSalesDetailActivity extends ActionBarActivity  {
 		mItemDetails = (TextView) findViewById(R.id.textView_mypost_item_details);
 		mDeleteBtn = (Button) findViewById(R.id.button_mypost_delete_btn);
 		Intent intent = getIntent();
-		
+
 		mPassedItemsName = intent.getStringExtra("title");
 		mPassedItemsPrice = intent.getStringExtra("price");
 		String itemLocation = intent.getStringExtra("location");
 		String itemDetails = intent.getStringExtra("description");
-		
-		mObjectId = intent.getStringExtra("oid");
-		
-		mDeleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	// Deleting the object from parse backend
-            	ParseObject.createWithoutData("Sales", mObjectId).deleteInBackground(new DeleteCallback() 
-            	{
-					@Override
-					public void done(ParseException e) 
-					{
-						if (e == null)
-						{
-							finish();
-							Toast.makeText(getApplicationContext(), "You have successfully deleted your posted sale.", Toast.LENGTH_LONG).show();
 
-						}
+		mObjectId = intent.getStringExtra("oid");
+
+		mDeleteBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+				// Add the buttons
+				builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					public void onClick(final DialogInterface dialog, int id) {
+						// Deleting the object from parse backend
+						ParseObject.createWithoutData("Sales", mObjectId).deleteInBackground(new DeleteCallback() 
+						{
+							@Override
+							public void done(ParseException e) 
+							{
+								if (e == null)
+								{
+									dialog.dismiss();
+									finish();
+									Toast.makeText(getApplicationContext(), "You have successfully deleted your posted sale.", Toast.LENGTH_LONG).show();
+
+								}
+							}
+						});
 					}
-            	});
-            }
-        });	
+				});
+				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+					}
+				});
+
+				builder.setMessage("Are you sure you want to delete your sale permanently?").setTitle("Delete Confirmation");
+
+				// Creating the AlertDialog
+				AlertDialog dialog = builder.create();
+				// Showing The AlertDialog
+				dialog.show();
+			}
+		});	
 		
 		mItemName.setText(mPassedItemsName);
 		mItemPrice.setText(mPassedItemsPrice);
