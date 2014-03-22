@@ -18,7 +18,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -53,113 +52,86 @@ public class ProfileActivity extends Activity {
 	TextView mPostedSalesAmount;
 	TextView mUsersName;
 	ParseRelation<ParseObject> mWatchingRelation;
-	
-	private class PullUserSalesFromParse extends AsyncTask<Void, Integer, Void> {
-		protected Void doInBackground(Void... params) {
-			for (int i = 0; i < 20; i++)
+	private void obtainPostedSales ()
+	{
+		progressDialogShow();
+		// Running query vs Parse DB to obtain Posted Sales from currently logged in user to display in ListView
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
+		query.orderByDescending("createdAt");
+		query.whereEqualTo("postedBy", mCurrentUser.getUsername());
+		query.findInBackground(new FindCallback<ParseObject>() 
+		{
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) 
 			{
-				publishProgress(5);
-				try {
-					Thread.sleep(45);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			// Running query vs Parse DB to obtain Posted Sales from currently logged in user to display in ListView
-			ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
-			query.orderByDescending("createdAt");
-			query.whereEqualTo("postedBy", mCurrentUser.getUsername());
-			query.findInBackground(new FindCallback<ParseObject>() 
-			{
-				@Override
-				public void done(List<ParseObject> objects, ParseException e) 
+				if (e == null) 
 				{
-					if (e == null) 
+					if (objects.toArray().length > 0)
 					{
-						if (objects.toArray().length > 0)
-						{
-							mData = new ArrayList<Map<String, String>>();
-						    mPostedSales = Integer.toString(objects.toArray().length);
-						    mPostedSalesAmount.setText("(" + mPostedSales + ")");
-						    for (int i=0; i < objects.toArray().length; i++)
-							{			
-								ParseObject sales = objects.get(i);
-								Map<String, String> map = new HashMap<String, String>(2);
-								map.put("title", sales.getString("title"));
-								map.put("price", sales.getString("price"));
-								map.put("location", sales.getString("location"));
-								map.put("description", sales.getString("description"));
-								map.put("oid", sales.getObjectId());
-								
-								mData.add(map);
-								
-							}
-							// Defining ListAdapter to use custom xml layout
-							ListAdapter adapter = new SimpleAdapter(ProfileActivity.this,
-							mData, R.layout.listview_cell,new String[] {"title", "price", "location", "description", "oid"}, new int[] {
-									R.id.textView_listView_saleTitle, R.id.textView_listView_salePrice });
-
-							mUserSales.setAdapter(adapter);
-							mUserSales.setOnItemClickListener(new OnItemClickListener() {
-
-								@Override
-								public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-									@SuppressWarnings("unchecked")
-									HashMap<String, String> hMap = (HashMap<String, String>) mUserSales.getItemAtPosition(pos);
-									
-									Intent intent = new Intent(getApplicationContext(), MyPostedSalesDetailActivity.class);
-									
-									intent.putExtra("title", hMap.get("title"));
-									intent.putExtra("price",hMap.get("price"));
-									intent.putExtra("location", hMap.get("location"));
-									intent.putExtra("description", hMap.get("description"));
-									intent.putExtra("oid", hMap.get("oid"));
-
-									startActivity(intent);
-								}
-							});
+						mData = new ArrayList<Map<String, String>>();
+					    mPostedSales = Integer.toString(objects.toArray().length);
+					    mPostedSalesAmount.setText("(" + mPostedSales + ")");
+					    for (int i=0; i < objects.toArray().length; i++)
+						{			
+							ParseObject sales = objects.get(i);
+							Map<String, String> map = new HashMap<String, String>(2);
+							map.put("title", sales.getString("title"));
+							map.put("price", sales.getString("price"));
+							map.put("location", sales.getString("location"));
+							map.put("description", sales.getString("description"));
+							map.put("oid", sales.getObjectId());
+							
+							mData.add(map);
+							
 						}
+						// Defining ListAdapter to use custom xml layout
+						ListAdapter adapter = new SimpleAdapter(ProfileActivity.this,
+						mData, R.layout.listview_cell,new String[] {"title", "price", "location", "description", "oid"}, new int[] {
+								R.id.textView_listView_saleTitle, R.id.textView_listView_salePrice });
+
+						mUserSales.setAdapter(adapter);
+						progressDialogHide();
+
+						mUserSales.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
+								@SuppressWarnings("unchecked")
+								HashMap<String, String> hMap = (HashMap<String, String>) mUserSales.getItemAtPosition(pos);
+								
+								Intent intent = new Intent(getApplicationContext(), MyPostedSalesDetailActivity.class);
+								
+								intent.putExtra("title", hMap.get("title"));
+								intent.putExtra("price",hMap.get("price"));
+								intent.putExtra("location", hMap.get("location"));
+								intent.putExtra("description", hMap.get("description"));
+								intent.putExtra("oid", hMap.get("oid"));
+
+								startActivity(intent);
+							}
+						});
 					}
 					else
 					{
-						Log.i(mTAG, e.getMessage());
+						progressDialogHide();
 					}
 				}
-			});
-		
-			return null;
-		}
-
-		@Override
-		protected void onPreExecute() {
-			mProgressDialog = new ProgressDialog(ProfileActivity.this);
-			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			mProgressDialog.setMax(100);
-			mProgressDialog.setTitle("Loading...");
-			mProgressDialog.setMessage("Please wait while we obtain your posted sales.");
-			mProgressDialog.show(); 
-			super.onPreExecute();
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			mProgressDialog.incrementProgressBy(values[0]);
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			mProgressDialog.dismiss();
-
-		}
+				else
+				{
+					Log.i(mTAG, e.getMessage());
+					progressDialogHide();
+				}
+			}
+		});
+	
 	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		
-		mUserSales = (ListView) findViewById(R.id.listView1);
-		mInboxAmount = (TextView) findViewById(R.id.textView_inbox_amount);
-		mWatchingAmount = (TextView) findViewById(R.id.textView_watching_amount);
+		initializeUIElements();
 		mWatchingAmount.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -168,9 +140,6 @@ public class ProfileActivity extends Activity {
 				startActivity(intent);				
 			}
 		});
-		mGBuxAmount = (TextView) findViewById(R.id.textView_gBux_amount);
-		mPostedSalesAmount = (TextView) findViewById(R.id.textView_posted_sales_amount);
-		mUsersName = (TextView) findViewById(R.id.textView_users_name);
 		mInboxAmount.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -180,13 +149,20 @@ public class ProfileActivity extends Activity {
 			}
 		});
 	}
+
+	public void initializeUIElements() {
+		mUserSales = (ListView) findViewById(R.id.listView1);
+		mInboxAmount = (TextView) findViewById(R.id.textView_inbox_amount);
+		mWatchingAmount = (TextView) findViewById(R.id.textView_watching_amount);
+		mGBuxAmount = (TextView) findViewById(R.id.textView_gBux_amount);
+		mPostedSalesAmount = (TextView) findViewById(R.id.textView_posted_sales_amount);
+		mUsersName = (TextView) findViewById(R.id.textView_users_name);
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
-		mCurrentUser = ParseUser.getCurrentUser();
 		
-
-		// Parse Analytics - (User data)
+		mCurrentUser = ParseUser.getCurrentUser();
 		ParseAnalytics.trackAppOpened(getIntent());
 		
 		// Setting up currentUser to current logged in user
@@ -197,55 +173,69 @@ public class ProfileActivity extends Activity {
 		}
 		else
 		{
+			// Obtaining User's Posted Sales from the Parse Backend
+			obtainPostedSales();
+			// Setting the User's Relation Class to the Member Variable mWatchingRelation
 			mWatchingRelation = mCurrentUser.getRelation("Watching");
+			
 			// Print their username to LogCat for debugging purposes
-			Log.i(mTAG, mCurrentUser.getUsername());
+			// Log.i(mTAG, mCurrentUser.getUsername());
+			
 			// Setting users username to the associated UI Element for Welcome Text
 			mUsersName.setText(mCurrentUser.getUsername() + "!");
+			
+			// Obtaining & Refreshing Users g-Bux Currency
 			String eBuxAmount = Integer.toString(mCurrentUser.getInt("gBux")); 
 			Log.i(mTAG, eBuxAmount); 
-			// Refreshing Users g-Bux Currency
 			mGBuxAmount.setText(eBuxAmount);
-			// Executing Async Task to Obtain User's Posted Sales to Parse DB
-			new PullUserSalesFromParse().execute();
-			// Running Query to obtain Messages for user & updating necessary UI element
-			ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
-			query.whereEqualTo("receiver", mCurrentUser.getUsername());
-			query.findInBackground(new FindCallback<ParseObject>() {
-			    public void done(List<ParseObject> messages, ParseException e) 
-			    {
-			        if (e == null) 
-			        {
-			        	// Logging the amount of messages received, as well as setting the text for the TextView
-			            Log.i(mTAG, "Retrieved " + messages.size() + " messages!");
-			            mInboxAmount.setText(Integer.toString(messages.size()));
-			        } 
-			        else 
-			        {
-			            Log.i(mTAG, "Error has occured: " + e.getMessage());
-			        }
-			    }
-			});
-			// Running query against Parse DB to obtain Watching Items for currently logged in user to display in a ListView.
-			mWatchingRelation.getQuery().findInBackground(new FindCallback<ParseObject>() 
-			{
-				@Override
-				public void done(List<ParseObject> objects, ParseException e) 
-				{
-					if (e == null) 
-					{
-					mWatchingAmount.setText(Integer.toString(objects.size()));
-		            Log.i(mTAG, "Retrieved " + objects.size() + " watching items!");
-
-					}
-					else
-					{
-						Log.i(mTAG, e.getMessage());
-					}
-				}
-			});			
+			
+			// Obtaining User Messages Stored via Parse Backend
+			obtainUserMessages();
+			// Obtaining User's Watching Sales from Parse DB
+			obtainWatchingSales();			
 		}
 	
+	}
+
+	public void obtainWatchingSales() {
+		mWatchingRelation.getQuery().findInBackground(new FindCallback<ParseObject>() 
+		{
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) 
+			{
+				if (e == null) 
+				{
+				mWatchingAmount.setText(Integer.toString(objects.size()));
+		        Log.i(mTAG, "Retrieved " + objects.size() + " watching items!");
+
+				}
+				else
+				{
+					Log.i(mTAG, e.getMessage());
+				}
+			}
+		});
+	}
+
+	public void obtainUserMessages() {
+		// Running Query to obtain Messages for user & updating necessary UI element
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Messages");
+		query.whereEqualTo("receiver", mCurrentUser.getUsername());
+		query.findInBackground(new FindCallback<ParseObject>() {
+		    public void done(List<ParseObject> messages, ParseException e) 
+		    {
+		        if (e == null) 
+		        {
+		        	// Logging the amount of messages received, as well as setting the text for the TextView
+		            Log.i(mTAG, "Retrieved " + messages.size() + " messages!");
+		            mInboxAmount.setText(Integer.toString(messages.size()));
+		        } 
+		        else 
+		        {
+		            Log.i(mTAG, "Error has occured: " + e.getMessage());
+		        }
+		    }
+		});
 	}
 	@SuppressLint("InlinedApi")
 	public void presentUserWithLogin() {
@@ -283,4 +273,17 @@ public class ProfileActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	private void progressDialogShow() {
+	    mProgressDialog = new ProgressDialog(this);
+	    mProgressDialog.setTitle("Loading...");
+	    mProgressDialog.setMessage("Please wait while we obtain your posted sales.");
+	    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+	    mProgressDialog.setCancelable(false);
+	    mProgressDialog.show();
+	}
+	private void progressDialogHide() {
+		mProgressDialog.dismiss();
+		mProgressDialog = null;
+	}
+
 }

@@ -18,7 +18,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -49,106 +48,81 @@ public class LocalSalesActivity extends Activity {
 	String mTAG = "LocalSalesActivity";
 	String mPostedSales;
 	
-	
-	private class PullLocalSalesFromParse extends AsyncTask<Void, Integer, Void> {
-		protected Void doInBackground(Void... params) {
-			for (int i = 0; i < 20; i++)
+	private void obtainLocalSales() 
+	{
+		progressDialogShow();
+		// Running query vs Parse DB to obtain Posted Sales from currently logged in user to display in ListView
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
+		query.orderByDescending("createdAt");
+		query.findInBackground(new FindCallback<ParseObject>() 
+		{
+			@Override
+			public void done(List<ParseObject> objects, ParseException e) 
 			{
-				publishProgress(5);
-				try {
-					Thread.sleep(45);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			// Running query vs Parse DB to obtain Posted Sales from currently logged in user to display in ListView
-			ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
-			query.orderByDescending("createdAt");
-			query.findInBackground(new FindCallback<ParseObject>() 
-			{
-				@Override
-				public void done(List<ParseObject> objects, ParseException e) 
+				if (e == null) 
 				{
-					if (e == null) 
+					if (objects.toArray().length > 0)
 					{
-						if (objects.toArray().length > 0)
-						{
-							mData = new ArrayList<Map<String, String>>();
-						    mPostedSales = Integer.toString(objects.toArray().length);
-						    mPostedSalesAmount.setText("(" + mPostedSales + ")");
-						    for (int i=0; i < objects.toArray().length; i++)
-							{			
-								ParseObject sales = objects.get(i);
-								Map<String, String> map = new HashMap<String, String>(2);
-								map.put("title", sales.getString("title"));
-								map.put("price", sales.getString("price"));
-								map.put("location", sales.getString("location"));
-								map.put("description", sales.getString("description"));
-								map.put("oid", sales.getObjectId());
-								map.put("postedBy", sales.getString("postedBy"));
-								
-								mData.add(map);
-								
-							}
-							// Defining ListAdapter to use custom xml layout
-							ListAdapter adapter = new SimpleAdapter(LocalSalesActivity.this,
-							mData, R.layout.listview_local_sales_cell,new String[] {"title", "description", "price", "location", "oid", "postedBy"}, new int[] {
-									R.id.textView_listView_localSalesSubject, R.id.textView_listView_localSalesDescription, R.id.textView_listView_localSalesPrice });
-
-							mLocalSales.setAdapter(adapter);
-							mLocalSales.setOnItemClickListener(new OnItemClickListener() {
-
-								@Override
-								public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-									@SuppressWarnings("unchecked")
-									HashMap<String, String> hMap = (HashMap<String, String>) mLocalSales.getItemAtPosition(pos);
-									
-									Intent intent = new Intent(getApplicationContext(), LocalSalesDetailActivity.class);
-									
-									intent.putExtra("title", hMap.get("title"));
-									intent.putExtra("price",hMap.get("price"));
-									intent.putExtra("location", hMap.get("location"));
-									intent.putExtra("description", hMap.get("description"));
-									intent.putExtra("oid", hMap.get("oid"));
-									intent.putExtra("postedBy", hMap.get("postedBy"));
-
-									startActivity(intent);
-								}
-							});
+						mData = new ArrayList<Map<String, String>>();
+					    mPostedSales = Integer.toString(objects.toArray().length);
+					    mPostedSalesAmount.setText("(" + mPostedSales + ")");
+					    for (int i=0; i < objects.toArray().length; i++)
+						{			
+							ParseObject sales = objects.get(i);
+							Map<String, String> map = new HashMap<String, String>(2);
+							map.put("title", sales.getString("title"));
+							map.put("price", sales.getString("price"));
+							map.put("location", sales.getString("location"));
+							map.put("description", sales.getString("description"));
+							map.put("oid", sales.getObjectId());
+							map.put("postedBy", sales.getString("postedBy"));
+							
+							mData.add(map);
+							
 						}
+						// Defining ListAdapter to use custom xml layout
+						ListAdapter adapter = new SimpleAdapter(LocalSalesActivity.this,
+						mData, R.layout.listview_local_sales_cell,new String[] {"title", "description", "price", "location", "oid", "postedBy"}, new int[] {
+								R.id.textView_listView_localSalesSubject, R.id.textView_listView_localSalesDescription, R.id.textView_listView_localSalesPrice });
+
+						mLocalSales.setAdapter(adapter);
+						progressDialogHide();
+						mLocalSales.setOnItemClickListener(new OnItemClickListener() {
+
+							@Override
+							public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
+								@SuppressWarnings("unchecked")
+								HashMap<String, String> hMap = (HashMap<String, String>) mLocalSales.getItemAtPosition(pos);
+								
+								Intent intent = new Intent(getApplicationContext(), LocalSalesDetailActivity.class);
+								
+								intent.putExtra("title", hMap.get("title"));
+								intent.putExtra("price",hMap.get("price"));
+								intent.putExtra("location", hMap.get("location"));
+								intent.putExtra("description", hMap.get("description"));
+								intent.putExtra("oid", hMap.get("oid"));
+								intent.putExtra("postedBy", hMap.get("postedBy"));
+
+								startActivity(intent);
+							}
+						});
 					}
 					else
 					{
-						Log.i(mTAG, e.getMessage());
+						progressDialogHide();
 					}
 				}
-			});
-		
-			return null;
-		}
+				else
+				{
+					Log.i(mTAG, e.getMessage());
+					progressDialogHide();
 
-		@Override
-		protected void onPreExecute() {
-			mProgressDialog = new ProgressDialog(LocalSalesActivity.this);
-			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			mProgressDialog.setMax(100);
-			mProgressDialog.setTitle("Loading...");
-			mProgressDialog.setMessage("Please wait while we find local sales around you.");
-			mProgressDialog.show(); 
-			super.onPreExecute();
-		}
-
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			mProgressDialog.incrementProgressBy(values[0]);
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			mProgressDialog.dismiss();
-
-		}
+				}
+			}
+		});
 	}
+			
+		
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -167,9 +141,9 @@ public class LocalSalesActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// Executing Async Task to Obtain Posted Sales from Parse DB
-		new PullLocalSalesFromParse().execute();
-	}
+		// Executing method to Obtain Posted Sales from Parse DB
+		obtainLocalSales();
+}
 	@SuppressLint("InlinedApi")
 	public void presentUserWithLogin() {
 		// Displaying the Login Activity to the user
@@ -204,5 +178,17 @@ public class LocalSalesActivity extends Activity {
 			finish();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	private void progressDialogShow() {
+	    mProgressDialog = new ProgressDialog(this);
+	    mProgressDialog.setTitle("Loading...");
+	    mProgressDialog.setMessage("Please wait while we obtain sales within your local area.");
+	    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+	    mProgressDialog.setCancelable(false);
+	    mProgressDialog.show();
+	}
+	private void progressDialogHide() {
+		mProgressDialog.dismiss();
+		mProgressDialog = null;
 	}
 }

@@ -13,8 +13,10 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -44,6 +46,7 @@ public class LoginActivity extends Activity {
 	public CheckBox mSaveUserName;
 	SharedPreferences mSharedPref;
 	public static String mUserData = "UserSavedData";
+	ProgressDialog mProgressDialog;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -64,15 +67,15 @@ public class LoginActivity extends Activity {
 		mResetPwTV.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				
 			    final Dialog dialog = new Dialog(LoginActivity.this);
-
                 dialog.setContentView(R.layout.alertdialog_resetpw);
                 dialog.setTitle("Reset Password");
+                dialog.show();
 
                 final EditText resetEmail = (EditText) dialog.findViewById(R.id.editText_resetEmailAddress);
                 Button btnReset = (Button)dialog.findViewById(R.id.button_resetPW);
                 btnReset.setOnClickListener(new View.OnClickListener() {
-					
 					@Override
 					public void onClick(final View v) {
 						// Setting inputedString to the current text in resetEmail field
@@ -85,23 +88,12 @@ public class LoginActivity extends Activity {
 		                	{
 		                		if (e == null) 
 		                		{
-		                			AlertDialog.Builder b = new AlertDialog.Builder(v.getContext());
-									b.setMessage(R.string.success_message_reset_pw);
-									b.setTitle(R.string.success_title_reset_pw);
-									b.setPositiveButton(android.R.string.ok, null);
-									AlertDialog d = b.create();
-									d.show();
-									  
-					               
+		                			alertUser(R.string.success_message_reset_pw, R.string.success_title_reset_pw);
+		                			
 		                		} 
 		                		else
 		                		{
-		                			AlertDialog.Builder b = new AlertDialog.Builder(v.getContext());
-									b.setMessage(e.getMessage());
-									b.setTitle(R.string.error_title_sign_up_verify_pw);
-									b.setPositiveButton(android.R.string.ok, null);
-									AlertDialog d = b.create();
-									d.show();
+		                			alertUserException(e.getMessage().toString(), R.string.error_title_sign_up_verify_pw);
 		                		}
 		                	}
 		                });
@@ -116,7 +108,6 @@ public class LoginActivity extends Activity {
 						dialog.dismiss();
 					}
 				});
-                dialog.show();
 			}
 		});
 		// Obtaining Shared Preferences Data
@@ -161,16 +152,12 @@ public class LoginActivity extends Activity {
 				// Checking if fields are empty, if so alert the user.
 				if (userName.isEmpty() || password.isEmpty())
 				{
-					AlertDialog.Builder b = new AlertDialog.Builder(LoginActivity.this);
-					b.setMessage(R.string.error_message_sign_up_missing_field);
-					b.setTitle(R.string.error_title_sign_up_missing_field);
-					b.setPositiveButton(android.R.string.ok, null);
-					AlertDialog d = b.create();
-					d.show();
+					alertUser(R.string.error_message_sign_up_missing_field, R.string.error_title_sign_up_missing_field);
 				} 
 				// Checking if the verified entered password matches the entered password, if not alert the user.
 				else
 				{
+					progressDialogShow();
 					ParseUser.logInInBackground(userName, password, new LogInCallback() {
 
 						@Override
@@ -202,6 +189,7 @@ public class LoginActivity extends Activity {
 									// Committing / Saving out data
 									editor.commit();			 
 								}
+								progressDialogHide();
 								Intent i = new Intent(LoginActivity.this, ProfileActivity.class);
 								i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 								i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -209,12 +197,8 @@ public class LoginActivity extends Activity {
 							}
 							else
 							{
-								AlertDialog.Builder b = new AlertDialog.Builder(LoginActivity.this);
-								b.setMessage(e.getMessage());
-								b.setTitle(R.string.error_title_sign_up_verify_pw);
-								b.setPositiveButton(android.R.string.ok, null);
-								AlertDialog d = b.create();
-								d.show();
+								alertUserException(e.getMessage().toString(), R.string.error_title_sign_up_verify_pw);
+								progressDialogHide();
 							}
 						}
 					});
@@ -242,5 +226,38 @@ public class LoginActivity extends Activity {
 		mSignUpBtn = (Button) findViewById(R.id.button_signUp);
 		mResetPwTV = (TextView) findViewById(R.id.textView_forgot_pw);
 		mLogInAsGuestBtn = (Button) findViewById(R.id.button_browse_as_guest);
+	}
+	private void alertUser(int message, int title) {
+		Resources re = getResources();
+	    String fTitle = re.getString(title);
+	    String fMessage = re.getString(message);
+		AlertDialog.Builder b = new AlertDialog.Builder(LoginActivity.this);
+		b.setMessage(fMessage);
+		b.setTitle(fTitle);
+		b.setPositiveButton(android.R.string.ok, null);
+		AlertDialog d = b.create();
+		d.show();
+	}
+	private void alertUserException(String message, int title) {
+		Resources re = getResources();
+	    String fTitle = re.getString(title);
+		AlertDialog.Builder b = new AlertDialog.Builder(LoginActivity.this);
+		b.setMessage(message);
+		b.setTitle(fTitle);
+		b.setPositiveButton(android.R.string.ok, null);
+		AlertDialog d = b.create();
+		d.show();
+	}
+	private void progressDialogShow() {
+	    mProgressDialog = new ProgressDialog(this);
+	    mProgressDialog.setTitle("Logging In...");
+	    mProgressDialog.setMessage("Attempting credentials, please wait.");
+	    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+	    mProgressDialog.setCancelable(false);
+	    mProgressDialog.show();
+	}
+	private void progressDialogHide() {
+		mProgressDialog.dismiss();
+		mProgressDialog = null;
 	}
 }

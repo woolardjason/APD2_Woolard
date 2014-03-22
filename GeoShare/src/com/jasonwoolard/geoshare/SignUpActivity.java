@@ -12,7 +12,9 @@ package com.jasonwoolard.geoshare;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -32,6 +34,8 @@ public class SignUpActivity extends Activity {
 	public EditText mUserVerifyPassword;
 	public EditText mUserEmailAddress;
 	public Button mSignUpBtn; 
+	ProgressDialog mProgressDialog;
+	String mTAG = "SignUpActivity";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,25 +59,18 @@ public class SignUpActivity extends Activity {
 				// Checking if fields are empty, if so alert the user.
 				if (userName.isEmpty() || password.isEmpty() || verifyPassword.isEmpty() || emailAddress.isEmpty())
 				{
-					AlertDialog.Builder b = new AlertDialog.Builder(SignUpActivity.this);
-					b.setMessage(R.string.error_message_sign_up_missing_field);
-					b.setTitle(R.string.error_title_sign_up_missing_field);
-					b.setPositiveButton(android.R.string.ok, null);
-					AlertDialog d = b.create();
-					d.show();
+					alertUser(R.string.error_message_sign_up_missing_field, R.string.error_title_sign_up_missing_field);
+					
 				} 
 				// Checking if the verified entered password matches the entered password, if not alert the user.
 				else if (!verifyPassword.matches(password))
 				{
-					AlertDialog.Builder b = new AlertDialog.Builder(SignUpActivity.this);
-					b.setMessage(R.string.error_message_sign_up_verify_pw);
-					b.setTitle(R.string.error_title_sign_up_verify_pw);
-					b.setPositiveButton(android.R.string.ok, null);
-					AlertDialog d = b.create();
-					d.show();
+					alertUser(R.string.error_message_sign_up_verify_pw, R.string.error_title_sign_up_verify_pw);
+				
 				}
 				else
 				{
+					progressDialogShow();
 					// Actually sign up...
 					ParseUser newGeoShareUser = new ParseUser();
 					newGeoShareUser.setUsername(userName);
@@ -88,22 +85,17 @@ public class SignUpActivity extends Activity {
 							// TODO Auto-generated method stub
 							if (e == null)
 							{
+								progressDialogHide();
 								// TODO: User has successfully created an account, reward the user with g-Bux and return user
 								// TODO: to the profile activity
 								Intent i = new Intent(SignUpActivity.this, ProfileActivity.class);
 								i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 								i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 								startActivity(i);
-								
 							}
 							else
 							{
-								AlertDialog.Builder b = new AlertDialog.Builder(SignUpActivity.this);
-								b.setMessage(e.getMessage());
-								b.setTitle(R.string.error_title_sign_up_verify_pw);
-								b.setPositiveButton(android.R.string.ok, null);
-								AlertDialog d = b.create();
-								d.show();
+								progressDialogHide();
 							}
 						}
 					});
@@ -135,5 +127,29 @@ public class SignUpActivity extends Activity {
 		getMenuInflater().inflate(R.menu.sign_up, menu);
 		return true;
 	}
-
+	
+	private void alertUser(int message, int title)
+	{
+		Resources re = getResources();
+	    String fTitle = re.getString(title);
+	    String fMessage = re.getString(message);
+		AlertDialog.Builder b = new AlertDialog.Builder(SignUpActivity.this);
+		b.setMessage(fMessage);
+		b.setTitle(fTitle);
+		b.setPositiveButton(android.R.string.ok, null);
+		AlertDialog d = b.create();
+		d.show();
+	}
+	private void progressDialogShow() {
+	    mProgressDialog = new ProgressDialog(this);
+	    mProgressDialog.setTitle("Signing Up...");
+	    mProgressDialog.setMessage("Please wait while we sign you up!");
+	    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+	    mProgressDialog.setCancelable(false);
+	    mProgressDialog.show();
+	}
+	private void progressDialogHide() {
+		mProgressDialog.dismiss();
+		mProgressDialog = null;
+	}
 }

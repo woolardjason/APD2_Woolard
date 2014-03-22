@@ -108,9 +108,7 @@ public class PostSaleActivity extends Activity {
 	}
 
 	public void initializeUIElements() { 
-		
-		mUser = ParseUser.getCurrentUser();
-		mCurrentUser =  mUser.getUsername();
+
 		
 		mPostSaleBtn = (Button) findViewById(R.id.button_post_sale);
 
@@ -131,6 +129,17 @@ public class PostSaleActivity extends Activity {
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 		startActivity(i);
 	}
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		
+		mUser = ParseUser.getCurrentUser();
+		mCurrentUser =  mUser.getUsername();
+		super.onResume();
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
