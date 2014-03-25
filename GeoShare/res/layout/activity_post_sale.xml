@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/editText_item_location"
-        android:layout_below="@+id/editText_item_location"
+        android:layout_below="@+id/button_snapPhoto"
         android:layout_marginTop="23dp"
         android:textColorHint="#FFFFFF"
         android:ems="10"
@@ -104,11 +104,29 @@
     <Button
         android:id="@+id/button_post_sale"
         android:layout_width="80sp"
-        android:layout_height="wrap_content"
+        android:layout_height="40sp"
         android:background="@drawable/gradient_listview_button"
         android:layout_alignRight="@+id/editText_item_description"
         android:layout_below="@+id/textView_enter_captcha"
         android:text="Post Sale"
         android:textSize="15sp" />
+
+    <ImageView
+        android:id="@+id/imageView_saleImage"
+        android:layout_width="125sp"
+        android:layout_height="115sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+ />
+
+    <Button
+        android:id="@+id/button_snapPhoto"
+        android:layout_width="80sp"
+        android:background="@drawable/gradient_listview_button"
+        android:layout_height="30sp"
+        android:layout_below="@+id/imageView_saleImage"
+        android:layout_toLeftOf="@+id/textView_enter_captcha"
+        android:textSize="12sp"
+        android:text="Snap Photo" />
 
 </RelativeLayout>

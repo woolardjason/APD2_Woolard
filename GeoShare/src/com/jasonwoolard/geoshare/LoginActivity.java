@@ -257,7 +257,10 @@ public class LoginActivity extends Activity {
 	    mProgressDialog.show();
 	}
 	private void progressDialogHide() {
+		if(mProgressDialog.isShowing())
+		{
 		mProgressDialog.dismiss();
 		mProgressDialog = null;
+		}
 	}
 }

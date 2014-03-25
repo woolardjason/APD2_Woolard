@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,11 +24,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.parse.FindCallback;
 import com.parse.ParseAnalytics;
@@ -38,7 +38,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends ListActivity {
 
 	public static final String mTAG = "Profile Acitivty";
 	List<Map<String, String>> mData;
@@ -49,81 +49,40 @@ public class ProfileActivity extends Activity {
 	TextView mWatchingAmount;
 	TextView mGBuxAmount;
 	String mPostedSales;
-	TextView mPostedSalesAmount;
+	static TextView mPostedSalesAmount;
 	TextView mUsersName;
 	ParseRelation<ParseObject> mWatchingRelation;
+	
+	private MyPostedSalesAdapter mOwnSalesAdapter;
+
 	private void obtainPostedSales ()
 	{
 		progressDialogShow();
-		// Running query vs Parse DB to obtain Posted Sales from currently logged in user to display in ListView
-		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
-		query.orderByDescending("createdAt");
-		query.whereEqualTo("postedBy", mCurrentUser.getUsername());
-		query.findInBackground(new FindCallback<ParseObject>() 
-		{
-			@Override
-			public void done(List<ParseObject> objects, ParseException e) 
-			{
-				if (e == null) 
-				{
-					if (objects.toArray().length > 0)
-					{
-						mData = new ArrayList<Map<String, String>>();
-					    mPostedSales = Integer.toString(objects.toArray().length);
-					    mPostedSalesAmount.setText("(" + mPostedSales + ")");
-					    for (int i=0; i < objects.toArray().length; i++)
-						{			
-							ParseObject sales = objects.get(i);
-							Map<String, String> map = new HashMap<String, String>(2);
-							map.put("title", sales.getString("title"));
-							map.put("price", sales.getString("price"));
-							map.put("location", sales.getString("location"));
-							map.put("description", sales.getString("description"));
-							map.put("oid", sales.getObjectId());
-							
-							mData.add(map);
-							
-						}
-						// Defining ListAdapter to use custom xml layout
-						ListAdapter adapter = new SimpleAdapter(ProfileActivity.this,
-						mData, R.layout.listview_cell,new String[] {"title", "price", "location", "description", "oid"}, new int[] {
-								R.id.textView_listView_saleTitle, R.id.textView_listView_salePrice });
-
-						mUserSales.setAdapter(adapter);
-						progressDialogHide();
-
-						mUserSales.setOnItemClickListener(new OnItemClickListener() {
-
-							@Override
-							public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-								@SuppressWarnings("unchecked")
-								HashMap<String, String> hMap = (HashMap<String, String>) mUserSales.getItemAtPosition(pos);
-								
-								Intent intent = new Intent(getApplicationContext(), MyPostedSalesDetailActivity.class);
-								
-								intent.putExtra("title", hMap.get("title"));
-								intent.putExtra("price",hMap.get("price"));
-								intent.putExtra("location", hMap.get("location"));
-								intent.putExtra("description", hMap.get("description"));
-								intent.putExtra("oid", hMap.get("oid"));
-
-								startActivity(intent);
-							}
-						});
-					}
-					else
-					{
-						progressDialogHide();
-					}
-				}
-				else
-				{
-					Log.i(mTAG, e.getMessage());
-					progressDialogHide();
-				}
-			}
-		});
+		mOwnSalesAdapter = new MyPostedSalesAdapter(this);
+		mOwnSalesAdapter.loadObjects();
 	
+						mUserSales.setAdapter(mOwnSalesAdapter);
+						progressDialogHide();
+
+//						mUserSales.setOnItemClickListener(new OnItemClickListener() {
+//
+//							@Override
+//							public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
+//								@SuppressWarnings("unchecked")
+//								HashMap<String, String> hMap = (HashMap<String, String>) mUserSales.getItemAtPosition(pos);
+//								
+//								Intent intent = new Intent(getApplicationContext(), MyPostedSalesDetailActivity.class);
+//								
+//								intent.putExtra("title", hMap.get("title"));
+//								intent.putExtra("price",hMap.get("price"));
+//								intent.putExtra("location", hMap.get("location"));
+//								intent.putExtra("description", hMap.get("description"));
+//								intent.putExtra("oid", hMap.get("oid"));
+//
+//								startActivity(intent);
+//							}
+//						});
+				
 	}
 	
 	@Override
@@ -151,12 +110,17 @@ public class ProfileActivity extends Activity {
 	}
 
 	public void initializeUIElements() {
-		mUserSales = (ListView) findViewById(R.id.listView1);
+		mUserSales = (ListView) findViewById(android.R.id.list);
 		mInboxAmount = (TextView) findViewById(R.id.textView_inbox_amount);
 		mWatchingAmount = (TextView) findViewById(R.id.textView_watching_amount);
 		mGBuxAmount = (TextView) findViewById(R.id.textView_gBux_amount);
 		mPostedSalesAmount = (TextView) findViewById(R.id.textView_posted_sales_amount);
 		mUsersName = (TextView) findViewById(R.id.textView_users_name);
+	}
+	public static void setTextView(int amount)
+	{
+		String finalString = Integer.toString(amount);
+		mPostedSalesAmount.setText(finalString);
 	}
 	@Override
 	protected void onResume() {
@@ -282,8 +246,11 @@ public class ProfileActivity extends Activity {
 	    mProgressDialog.show();
 	}
 	private void progressDialogHide() {
-		mProgressDialog.dismiss();
-		mProgressDialog = null;
+		if (mProgressDialog.isShowing())
+		{
+			mProgressDialog.dismiss();
+			mProgressDialog = null;
+		}
 	}
 
 }

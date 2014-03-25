@@ -149,7 +149,10 @@ public class SignUpActivity extends Activity {
 	    mProgressDialog.show();
 	}
 	private void progressDialogHide() {
-		mProgressDialog.dismiss();
-		mProgressDialog = null;
+		if (mProgressDialog.isShowing())
+		{
+			mProgressDialog.dismiss();
+			mProgressDialog = null;
+		}
 	}
 }

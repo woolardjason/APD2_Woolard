@@ -20,7 +20,7 @@
         android:textStyle="bold" />
 
     <ListView
-        android:id="@+id/listView_localSales"
+        android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView_localHeader" />
@@ -29,7 +29,7 @@
         android:id="@+id/textView_localSalesAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/listView_localSales"
+        android:layout_above="@android:id/list"
         android:layout_alignParentRight="true"
         android:background="#336699"
         android:padding="10dp"
