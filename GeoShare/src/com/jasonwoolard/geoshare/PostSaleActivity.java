@@ -141,9 +141,9 @@ public class PostSaleActivity extends Activity {
 							if (e == null) 
 							{
 								// Closing Activity and displaying Toast Notification that the sale was posted successfully.
-								finish();
-								Toast.makeText(getApplicationContext(), "Your item has been posted for sale successfully!", Toast.LENGTH_LONG).show();
 								progressDialogHide();
+								Toast.makeText(getApplicationContext(), "Your item has been posted for sale successfully!", Toast.LENGTH_LONG).show();
+								finish();
 							} 
 							else 
 							{
@@ -245,14 +245,14 @@ public class PostSaleActivity extends Activity {
 	}
 	private void progressDialogShow() {
 	    mProgressDialog = new ProgressDialog(this);
-	    mProgressDialog.setTitle("Logging In...");
-	    mProgressDialog.setMessage("Attempting credentials, please wait.");
+	    mProgressDialog.setTitle("Posting Sale");
+	    mProgressDialog.setMessage("One moment please while we post your sale...");
 	    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 	    mProgressDialog.setCancelable(false);
 	    mProgressDialog.show();
 	}
 	private void progressDialogHide() {
-		if (mProgressDialog.isShowing())
+		if (mProgressDialog != null && mProgressDialog.isShowing())
 		{
 			mProgressDialog.dismiss();
 			mProgressDialog = null;

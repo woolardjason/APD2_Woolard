@@ -9,8 +9,6 @@
  */
 package com.jasonwoolard.geoshare;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,11 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.parse.FindCallback;
@@ -61,8 +55,8 @@ public class ProfileActivity extends ListActivity {
 		mOwnSalesAdapter = new MyPostedSalesAdapter(this);
 		mOwnSalesAdapter.loadObjects();
 	
-						mUserSales.setAdapter(mOwnSalesAdapter);
-						progressDialogHide();
+		mUserSales.setAdapter(mOwnSalesAdapter);
+		progressDialogHide();
 
 //						mUserSales.setOnItemClickListener(new OnItemClickListener() {
 //

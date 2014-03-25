@@ -85,13 +85,15 @@ public class SignUpActivity extends Activity {
 							// TODO Auto-generated method stub
 							if (e == null)
 							{
-								progressDialogHide();
+								
 								// TODO: User has successfully created an account, reward the user with g-Bux and return user
 								// TODO: to the profile activity
 								Intent i = new Intent(SignUpActivity.this, ProfileActivity.class);
 								i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 								i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 								startActivity(i);
+								
+								progressDialogHide();
 							}
 							else
 							{
@@ -104,7 +106,6 @@ public class SignUpActivity extends Activity {
 		});
 		
 	}
-
 	public void initializeUIElements() {
 		mUserName = (EditText) findViewById(R.id.editText_username);
 		mUserPassword = (EditText) findViewById(R.id.editText_password);
@@ -148,8 +149,9 @@ public class SignUpActivity extends Activity {
 	    mProgressDialog.setCancelable(false);
 	    mProgressDialog.show();
 	}
+	
 	private void progressDialogHide() {
-		if (mProgressDialog.isShowing())
+		if (mProgressDialog != null && mProgressDialog.isShowing())
 		{
 			mProgressDialog.dismiss();
 			mProgressDialog = null;
