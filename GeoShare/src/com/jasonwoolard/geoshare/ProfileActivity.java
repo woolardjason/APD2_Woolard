@@ -21,8 +21,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.parse.FindCallback;
 import com.parse.ParseAnalytics;
@@ -58,24 +60,24 @@ public class ProfileActivity extends ListActivity {
 		mUserSales.setAdapter(mOwnSalesAdapter);
 		progressDialogHide();
 
-//						mUserSales.setOnItemClickListener(new OnItemClickListener() {
-//
-//							@Override
-//							public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
-//								@SuppressWarnings("unchecked")
-//								HashMap<String, String> hMap = (HashMap<String, String>) mUserSales.getItemAtPosition(pos);
-//								
-//								Intent intent = new Intent(getApplicationContext(), MyPostedSalesDetailActivity.class);
-//								
-//								intent.putExtra("title", hMap.get("title"));
-//								intent.putExtra("price",hMap.get("price"));
-//								intent.putExtra("location", hMap.get("location"));
-//								intent.putExtra("description", hMap.get("description"));
-//								intent.putExtra("oid", hMap.get("oid"));
-//
-//								startActivity(intent);
-//							}
-//						});
+		mUserSales.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v, int pos,
+					long id) {
+				ParseObject sale = mOwnSalesAdapter.getItem(pos);
+				String objectID = sale.getObjectId().toString();
+				Log.i(mTAG, objectID);
+				Intent intent = new Intent(getApplicationContext(), MyPostedSalesDetailActivity.class);
+				intent.putExtra("title", sale.getString("title"));
+				intent.putExtra("price",sale.getString("price"));
+				intent.putExtra("location", sale.getString("location"));
+				intent.putExtra("description", sale.getString("description"));
+				intent.putExtra("oid", objectID);
+				intent.putExtra("postedBy", sale.getString("postedBy"));
+				startActivity(intent);
+			}
+		});
 				
 	}
 	

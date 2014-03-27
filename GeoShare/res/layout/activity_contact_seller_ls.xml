@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#acacac"
+    tools:context=".ContactSellerActivity" >
+
+    <TextView
+        android:id="@+id/textView_contactSellerLSToHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="To: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView_contactSellerLSSellersName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_contactSellerLSToHeader"
+        android:layout_alignBottom="@+id/textView_contactSellerLSToHeader"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/textView_contactSellerLSToHeader"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView_contactSellerLSSubjectHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_contactSellerLSToHeader"
+        android:layout_below="@+id/textView_contactSellerLSToHeader"
+        android:text="Subject: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView_contactSellerLSSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView_contactSellerLSSubjectHeader"
+        android:layout_alignBottom="@+id/textView_contactSellerLSSubjectHeader"
+        android:layout_toRightOf="@+id/textView_contactSellerLSSubjectHeader"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/editText_contactSellerLSMessageField"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView_contactSellerLSSubjectHeader"
+        android:layout_below="@+id/textView_contactSellerLSSubject"
+        android:hint="Message Details..."
+        android:ems="10" >
+
+    </EditText>
+
+</RelativeLayout>

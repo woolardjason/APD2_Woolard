@@ -9,7 +9,11 @@
  */
 package com.jasonwoolard.geoshare;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -20,11 +24,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
@@ -49,6 +56,7 @@ public class LocalSalesDetailActivity extends ActionBarActivity {
 	ParseRelation<ParseObject> mWatchingRelation;
 	ParseUser mCurrentUser;
 	String mTAG ="LocalSalesDetailActivity";
+	ProgressDialog mProgressDialog;
 	
 	private ShareActionProvider mProvider;
 
@@ -67,7 +75,34 @@ public class LocalSalesDetailActivity extends ActionBarActivity {
 		mDataPostedBy = intent.getStringExtra("postedBy");
 
 		initializeUIElements();
-		
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
+		query.getInBackground(mDataObjectId, new GetCallback<ParseObject>() {
+			public void done(ParseObject object,ParseException e) {
+
+				ParseFile fileObject = (ParseFile) object.get("photo");
+				if (fileObject != null)
+				{
+					fileObject.getDataInBackground(new GetDataCallback() {
+						public void done(byte[] data, ParseException e) {
+							if (e == null) 
+							{
+								// Decoding the Byte Array into a Bitmap
+								Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+								ImageView saleImage = (ImageView) findViewById(R.id.imageView_localSalesDetailPhoto);
+								// Setting the Bitmap into the ImageView
+								saleImage.setImageBitmap(bmp);
+							} else {
+								Log.i(mTAG, "Error with downloading the data: " + e.toString());
+							}
+						}
+					});
+				}
+				else
+				{
+					// Set ImageView to Placeholder
+				}
+			}
+		});
 		mItemName.setText(mDataTitle);
 		mItemPrice.setText(mDataPrice);
 		mItemLocation.setText(mDataLocation);
@@ -75,6 +110,7 @@ public class LocalSalesDetailActivity extends ActionBarActivity {
 		mWatchItem.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				progressDialogShow();
 				Log.i("WatchIteMBtn", "was clicked");
 				ParseQuery<ParseObject> query = ParseQuery.getQuery("Sales");
 				query.getInBackground(mDataObjectId, new GetCallback<ParseObject>() {
@@ -88,13 +124,15 @@ public class LocalSalesDetailActivity extends ActionBarActivity {
 							public void done(ParseException e) {
 								if (e == null)
 								{
+									progressDialogHide();
 									// Displaying Toast Notification that the sale was successfully added to Watch List
 									Toast.makeText(getApplicationContext(), "You have successfully added the item " +  "'" + mDataTitle + "'" + " to your Watch List!", Toast.LENGTH_LONG).show();
-									
+
 								}
 								else
 								{
 									Log.e(mTAG, e.getMessage());
+									progressDialogHide();
 								}
 							}
 						});
@@ -102,6 +140,7 @@ public class LocalSalesDetailActivity extends ActionBarActivity {
 				    } else {
 				    	// Not added to watch list - something went wrong...
 						  Log.e("done fired", e.toString());
+						  progressDialogHide();
 				    }
 				  }
 				});
@@ -110,17 +149,42 @@ public class LocalSalesDetailActivity extends ActionBarActivity {
 		mContactSeller.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), ContactSellerActivity.class);
+				Intent intent = new Intent(getApplicationContext(), ContactSellerLSActivity.class);
 				
 				intent.putExtra("title", mDataTitle);
 				intent.putExtra("oid", mDataObjectId);
 				intent.putExtra("postedBy", mDataPostedBy);
+				intent.putExtra("location", mDataLocation);
+				intent.putExtra("price", mDataPrice);
+				intent.putExtra("description", mDataDetails);
 
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			}
 		});
 	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data); 
+		Log.i(mTAG, "onActivityResult called");
+		switch(requestCode) { 
+		case 0: { 
+			if (resultCode == Activity.RESULT_OK) { 
+				mDataTitle = data.getStringExtra("title");
+				mDataPrice = data.getStringExtra("price");
+				mDataLocation = data.getStringExtra("location");
+				mDataDetails = data.getStringExtra("description");
+				mDataObjectId = data.getStringExtra("oid");
+				mDataPostedBy = data.getStringExtra("postedBy");
 
+				mItemName.setText(mDataTitle);
+				mItemPrice.setText(mDataPrice);
+				mItemLocation.setText(mDataLocation);
+				mItemDetails.setText(mDataDetails);
+			} 
+			break; 
+		} 
+		} 
+	}
 	private void initializeUIElements() {
 		mItemName = (TextView) findViewById(R.id.textView_localSalesDetailTitle);
 		mItemPrice = (TextView) findViewById(R.id.textView_localSalesDetailPrice);
@@ -154,5 +218,20 @@ public class LocalSalesDetailActivity extends ActionBarActivity {
 		}
 		return true;
 	}
-
+	private void progressDialogShow() {
+	    mProgressDialog = new ProgressDialog(this);
+	    mProgressDialog.setTitle("One Moment...");
+	    mProgressDialog.setMessage("Adding sale to your watch list!");
+	    mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+	    mProgressDialog.setCancelable(false);
+	    mProgressDialog.show();
+	}
+	
+	private void progressDialogHide() {
+		if (mProgressDialog != null && mProgressDialog.isShowing())
+		{
+			mProgressDialog.dismiss();
+			mProgressDialog = null;
+		}
+	}
 }

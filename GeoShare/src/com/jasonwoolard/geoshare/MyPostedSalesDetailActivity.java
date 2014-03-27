@@ -13,22 +13,29 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.ShareActionProvider;
-import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.DeleteCallback;
+import com.parse.GetCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 
 public class MyPostedSalesDetailActivity extends ActionBarActivity  {
@@ -53,6 +60,7 @@ public class MyPostedSalesDetailActivity extends ActionBarActivity  {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_posted_sales_detail);
 		mActionBar = getSupportActionBar();
+	
 		mItemName = (TextView) findViewById(R.id.textView_mypost_title);
 		mItemPrice = (TextView) findViewById(R.id.textView_mypost_asking_price);
 		mItemLocation = (TextView) findViewById(R.id.textView_mypost_location);
@@ -66,7 +74,35 @@ public class MyPostedSalesDetailActivity extends ActionBarActivity  {
 		String itemDetails = intent.getStringExtra("description");
 
 		mObjectId = intent.getStringExtra("oid");
+		
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
+		query.getInBackground(mObjectId, new GetCallback<ParseObject>() {
+			public void done(ParseObject object,ParseException e) {
 
+				ParseFile fileObject = (ParseFile) object.get("photo");
+				if (fileObject != null)
+				{
+					fileObject.getDataInBackground(new GetDataCallback() {
+						public void done(byte[] data, ParseException e) {
+							if (e == null) 
+							{
+								// Decoding the Byte Array into a Bitmap
+								Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+								ImageView saleImage = (ImageView) findViewById(R.id.imageView1);
+								// Setting the Bitmap into the ImageView
+								saleImage.setImageBitmap(bmp);
+							} else {
+								Log.i(mTAG, "Error with downloading the data: " + e.toString());
+							}
+						}
+					});
+				}
+				else
+				{
+					// Change ImageView to Placeholder
+				}
+			}
+		});
 		mDeleteBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

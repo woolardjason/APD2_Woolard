@@ -96,6 +96,13 @@
         <activity
             android:name="com.jasonwoolard.geoshare.ContactSellerActivity"
             android:label="@string/title_activity_contact_seller"
+            android:parentActivityName="com.jasonwoolard.geoshare.WatchingSalesDetailActivity" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+        <activity
+            android:name="com.jasonwoolard.geoshare.ContactSellerLSActivity"
+            android:label="@string/title_activity_contact_seller"
             android:parentActivityName="com.jasonwoolard.geoshare.LocalSalesDetailActivity" 
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize" >

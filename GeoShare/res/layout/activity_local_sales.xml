@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:background="#acacac"
     tools:context=".LocalSalesActivity" >
-
+     
        <TextView
         android:id="@+id/textView_localHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/button_searchLocalSales"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
         android:background="#336699"
         android:gravity="center_vertical"
         android:padding="10dp"
@@ -36,5 +36,33 @@
         android:text="(0)"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button_searchLocalSales"
+        android:layout_alignBottom="@+id/button_searchLocalSales"
+        android:layout_alignParentLeft="true"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/button_searchLocalSales"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Search" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_toLeftOf="@+id/button_searchLocalSales"
+        android:layout_toRightOf="@+id/textView1"
+        android:ems="10" />
 
 </RelativeLayout>

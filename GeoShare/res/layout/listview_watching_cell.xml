@@ -6,25 +6,31 @@
     android:padding="10sp"
     android:orientation="vertical" >
 
-    
+     <com.parse.ParseImageView
+        android:id="@+id/icon"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true" />
+     
      <TextView
          android:id="@+id/textView_listView_watchingSubject"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:layout_centerVertical="true"
-         android:gravity="center_vertical"
+         android:layout_toRightOf="@+id/icon"
+         android:layout_marginTop="17sp"
+         android:layout_marginLeft="5dp"
          android:textColor="#000000"
-         android:textSize="18sp"
+         android:textSize="20sp"
          android:textStyle="bold" />
       <TextView
          android:id="@+id/textView_listView_watchingDescription"
          android:layout_width="210sp"
-         android:layout_marginTop="5sp"
          android:lines="1"
          android:layout_height="wrap_content"
          android:layout_below="@+id/textView_listView_watchingSubject"
+         android:layout_alignLeft="@+id/textView_listView_watchingSubject"
          android:textColor="#6B6B6B"
-         android:textSize="11sp"
+         android:textSize="13sp"
          />
     
      <TextView
@@ -35,7 +41,7 @@
          android:layout_centerVertical="true"
          android:gravity="center_vertical"
          android:textColor="#216C2A"
-         android:textSize="14sp"
+         android:textSize="17sp"
          android:textStyle="bold" />
 
 </RelativeLayout>

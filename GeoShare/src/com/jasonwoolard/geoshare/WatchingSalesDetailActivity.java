@@ -9,7 +9,10 @@
  */
 package com.jasonwoolard.geoshare;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -21,11 +24,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.GetCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
@@ -68,7 +74,34 @@ public class WatchingSalesDetailActivity extends ActionBarActivity {
 		mDataPostedBy = intent.getStringExtra("postedBy");
 
 		initializeUIElements();
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
+		query.getInBackground(mDataObjectId, new GetCallback<ParseObject>() {
+			public void done(ParseObject object,ParseException e) {
 
+				ParseFile fileObject = (ParseFile) object.get("photo");
+				if (fileObject != null)
+				{
+					fileObject.getDataInBackground(new GetDataCallback() {
+						public void done(byte[] data, ParseException e) {
+							if (e == null) 
+							{
+								// Decoding the Byte Array into a Bitmap
+								Bitmap bmp = BitmapFactory.decodeByteArray(data, 0, data.length);
+								ImageView saleImage = (ImageView) findViewById(R.id.imageView_watchingSalesDetailPhoto);
+								// Setting the Bitmap into the ImageView
+								saleImage.setImageBitmap(bmp);
+							} else {
+								Log.i(mTAG, "Error with downloading the data: " + e.toString());
+							}
+						}
+					});
+				}
+				else
+				{
+					// Set ImageView to Placeholder
+				}
+			}
+		});
 		mItemName.setText(mDataTitle);
 		mItemPrice.setText(mDataPrice);
 		mItemLocation.setText(mDataLocation);
@@ -82,8 +115,11 @@ public class WatchingSalesDetailActivity extends ActionBarActivity {
 				intent.putExtra("title", mDataTitle);
 				intent.putExtra("oid", mDataObjectId);
 				intent.putExtra("postedBy", mDataPostedBy);
-
-				startActivity(intent);
+				intent.putExtra("location", mDataLocation);
+				intent.putExtra("price", mDataPrice);
+				intent.putExtra("description", mDataDetails);
+				
+				startActivityForResult(intent, 0);
 			}
 		});
 		mDoNotWatchItem.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +195,31 @@ public class WatchingSalesDetailActivity extends ActionBarActivity {
 		    });
 		}
 		return true;
+	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		super.onActivityResult(requestCode, resultCode, data); 
+		Log.i(mTAG, "onActivityResult Fired");
+
+		switch(requestCode) { 
+		case 0 : { 
+			if (resultCode == Activity.RESULT_OK) { 
+				mDataTitle = data.getStringExtra("title");
+				mDataPrice = data.getStringExtra("price");
+				mDataLocation = data.getStringExtra("location");
+				mDataDetails = data.getStringExtra("description");
+				mDataObjectId = data.getStringExtra("oid");
+				mDataPostedBy = data.getStringExtra("postedBy");
+
+				mItemName.setText(mDataTitle);
+				mItemPrice.setText(mDataPrice);
+				mItemLocation.setText(mDataLocation);
+				mItemDetails.setText(mDataDetails);
+			} 
+			break; 
+		} 
+		} 
 	}
 	public void rewardUser(){
 		int gBuxAmount = mCurrentUser.getInt("gBux");

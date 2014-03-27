@@ -17,6 +17,7 @@ import com.parse.SaveCallback;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -30,7 +31,10 @@ public class ContactSellerActivity extends Activity {
 	String mDataItemTitle;
 	String mDataItemOid;
 	String mDataSellerName;
-	ParseUser mCurrentUser;
+	String mDataItemDescription;
+	String mDataItemPrice;
+	String mDataItemLocation;
+    ParseUser mCurrentUser;
 	String mTAG = "ContactSellerActivity";
 	
 	@Override
@@ -38,6 +42,8 @@ public class ContactSellerActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contact_seller);
 		
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
+	    
 		mSellerName = (TextView) findViewById(R.id.textView_contactSellerSellersName);
 		mItemTitle = (TextView) findViewById(R.id.textView_contactSellerSubject);
 		mMessageDetails = (EditText) findViewById(R.id.editText_contactSellerMessageField);
@@ -48,6 +54,9 @@ public class ContactSellerActivity extends Activity {
 		mDataItemTitle = intent.getStringExtra("title");
 		mDataItemOid = intent.getStringExtra("oid");
 		mDataSellerName = intent.getStringExtra("postedBy");
+		mDataItemDescription = intent.getStringExtra("description");
+		mDataItemPrice = intent.getStringExtra("price");
+		mDataItemLocation = intent.getStringExtra("location");
 		
 		mSellerName.setText(mDataSellerName);
 		mItemTitle.setText("(Item Inquiry)  " + mDataItemTitle );
@@ -60,6 +69,7 @@ public class ContactSellerActivity extends Activity {
 		getMenuInflater().inflate(R.menu.contact_seller, menu);
 		return true;
 	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) 
@@ -92,8 +102,25 @@ public class ContactSellerActivity extends Activity {
 				}
 			});
 			break;
+		  case android.R.id.home:
+			  finish();
+			  return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public void finish() {
+		Log.i(mTAG, "Finish fired!");
+		Intent data = new Intent();
+		data.putExtra("title", mDataItemTitle);
+		data.putExtra("description", mDataItemDescription);
+		data.putExtra("location", mDataItemLocation);
+		data.putExtra("price", mDataItemPrice);
+		data.putExtra("oid", mDataItemOid);
+		data.putExtra("postedBy", mDataSellerName);
+
+		setResult(RESULT_OK, data);
+		super.finish();
+	}
 }

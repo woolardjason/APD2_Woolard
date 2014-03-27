@@ -14,11 +14,16 @@ import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 public class LocalSalesActivity extends ListActivity {
@@ -27,7 +32,7 @@ public class LocalSalesActivity extends ListActivity {
 	ProgressDialog mProgressDialog;
 	ParseUser mCurrentUser;
 	String mTAG = "LocalSalesActivity";
-
+	
 	private LocalSalesAdapter localSalesAdapter;
 
 	
@@ -47,7 +52,24 @@ public class LocalSalesActivity extends ListActivity {
 		localSalesAdapter = new LocalSalesAdapter(this);
 		localSalesAdapter.loadObjects();
 		setListAdapter(localSalesAdapter);
+		mLocalSales.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View v, int pos,
+					long id) {
+				ParseObject sale = localSalesAdapter.getItem(pos);
+				String objectID = sale.getObjectId().toString();
+				Log.i(mTAG, objectID);
+				Intent intent = new Intent(getApplicationContext(), LocalSalesDetailActivity.class);
+				intent.putExtra("title", sale.getString("title"));
+				intent.putExtra("price",sale.getString("price"));
+				intent.putExtra("location", sale.getString("location"));
+				intent.putExtra("description", sale.getString("description"));
+				intent.putExtra("oid", objectID);
+				intent.putExtra("postedBy", sale.getString("postedBy"));
+				startActivity(intent);
+			}
+		});
 		
 	}
 	
