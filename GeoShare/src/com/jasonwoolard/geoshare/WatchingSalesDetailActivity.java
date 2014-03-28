@@ -43,6 +43,7 @@ public class WatchingSalesDetailActivity extends ActionBarActivity {
 	TextView mItemPrice;
 	TextView mItemLocation;
 	TextView mItemDetails;
+	ImageView mItemImage;
 	Button mContactSeller;
 	Button mDoNotWatchItem;
 	ActionBar mActionBar;
@@ -74,6 +75,7 @@ public class WatchingSalesDetailActivity extends ActionBarActivity {
 		mDataPostedBy = intent.getStringExtra("postedBy");
 
 		initializeUIElements();
+		mItemImage.setImageResource(R.drawable.placeholder);
 		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Sales");
 		query.getInBackground(mDataObjectId, new GetCallback<ParseObject>() {
 			public void done(ParseObject object,ParseException e) {
@@ -168,6 +170,7 @@ public class WatchingSalesDetailActivity extends ActionBarActivity {
 		mItemDetails = (TextView) findViewById(R.id.textView_watchingSalesDetailDetails);
 		mDoNotWatchItem = (Button) findViewById(R.id.button_watchingSalesDetailUnwatchItem);
 		mContactSeller = (Button) findViewById(R.id.button_watchingSalesDetailContactSeller);
+		mItemImage = (ImageView) findViewById(R.id.imageView_watchingSalesDetailPhoto);
 	}
 	@Override
 	protected void onResume() {
@@ -213,7 +216,7 @@ public class WatchingSalesDetailActivity extends ActionBarActivity {
 				mDataPostedBy = data.getStringExtra("postedBy");
 
 				mItemName.setText(mDataTitle);
-				mItemPrice.setText(mDataPrice);
+				mItemPrice.setText("$"+mDataPrice);
 				mItemLocation.setText(mDataLocation);
 				mItemDetails.setText(mDataDetails);
 			} 

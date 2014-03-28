@@ -15,7 +15,10 @@ import java.util.Map;
 import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,7 +30,6 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.parse.FindCallback;
-import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -56,7 +58,6 @@ public class ProfileActivity extends ListActivity {
 		progressDialogShow();
 		mOwnSalesAdapter = new MyPostedSalesAdapter(this);
 		mOwnSalesAdapter.loadObjects();
-	
 		mUserSales.setAdapter(mOwnSalesAdapter);
 		progressDialogHide();
 
@@ -80,7 +81,16 @@ public class ProfileActivity extends ListActivity {
 		});
 				
 	}
-	
+	public boolean isUserOnline() {
+	    Context context = this;
+	    ConnectivityManager connectivityManager = (ConnectivityManager) context
+	        .getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+	    if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -118,18 +128,19 @@ public class ProfileActivity extends ListActivity {
 		String finalString = Integer.toString(amount);
 		mPostedSalesAmount.setText(finalString);
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		
 		mCurrentUser = ParseUser.getCurrentUser();
-		ParseAnalytics.trackAppOpened(getIntent());
 		
 		// Setting up currentUser to current logged in user
 		// If user is not logged in, present them with Login Activity
-		if (mCurrentUser == null)
+		if (mCurrentUser == null || !isUserOnline())
 		{
 			presentUserWithLogin();
+
 		}
 		else
 		{

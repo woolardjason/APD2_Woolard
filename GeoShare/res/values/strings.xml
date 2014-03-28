@@ -55,4 +55,6 @@
     <string name="title_activity_inbox_message_reply">Reply To Message</string>
     <string name="title_activity_watching_sales_detail">Item Details</string>
 	<string name="error_ext_stor">There has been an error!</string>
+	<string name="error_title_captcha_incorrect_field">Whoops!</string>
+	<string name="error_message_captcha_incorrect_field">You have not entered the correct captcha, please try again!</string>
 </resources>

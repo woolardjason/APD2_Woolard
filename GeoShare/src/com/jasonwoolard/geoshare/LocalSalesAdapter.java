@@ -1,6 +1,7 @@
 package com.jasonwoolard.geoshare;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import com.parse.GetDataCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseImageView;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
@@ -17,16 +19,20 @@ public class LocalSalesAdapter extends ParseQueryAdapter<Sale> {
 
 	static String mTAG = "LocalSalesAdapter";
 	
-	public LocalSalesAdapter(Context context) {
+	public LocalSalesAdapter(final Context context) {
 		super(context, new ParseQueryAdapter.QueryFactory<Sale>() {
 			@SuppressWarnings("unchecked")
 			public ParseQuery<Sale> create() {
 				@SuppressWarnings("rawtypes")
 				ParseQuery query = new ParseQuery("Sales"); 
 				query.orderByDescending("createdAt");
+				int userInputedMiles = LocalSalesActivity.getMiles();
+				Log.i(mTAG, Integer.toString(userInputedMiles));
+				ParseGeoPoint userLoc = LocalSalesActivity.getUserCoords();
+				query.whereWithinMiles("saleLocation", userLoc, userInputedMiles);
 				try {
 					int salesAmount = query.count();
-					LocalSalesActivity.setTextView(salesAmount);
+					LocalSalesActivity.updateUserWithSaleInfo(context, salesAmount);
 				} catch (ParseException e) {
 					
 					e.printStackTrace();

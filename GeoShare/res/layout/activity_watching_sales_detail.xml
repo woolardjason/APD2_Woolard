@@ -35,6 +35,7 @@
         android:id="@+id/textView_watchingSalesDetailPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#216C2A"
         android:layout_alignBaseline="@+id/textView_watchingSalesDetailItemPriceHeader"
         android:layout_alignBottom="@+id/textView_watchingSalesDetailItemPriceHeader"
         android:layout_toRightOf="@+id/textView_watchingSalesDetailItemPriceHeader"

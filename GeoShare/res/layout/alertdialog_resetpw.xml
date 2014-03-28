@@ -7,9 +7,9 @@
 
     <EditText
         android:id="@+id/editText_resetEmailAddress"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter the email address you used to register and click Request below"
+        android:hint="Enter Email Used To Register"
         android:textSize="10sp"
         android:inputType="textEmailAddress" >
     </EditText>

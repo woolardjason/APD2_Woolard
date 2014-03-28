@@ -12,17 +12,28 @@ package com.jasonwoolard.geoshare;
 import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -32,6 +43,14 @@ public class LocalSalesActivity extends ListActivity {
 	ProgressDialog mProgressDialog;
 	ParseUser mCurrentUser;
 	String mTAG = "LocalSalesActivity";
+	static EditText mMileInput;
+	Button mSearchSales;
+	
+	LocationManager mLocationManager;
+	LocationListener mLocationListener;
+	
+	static double mLatitude;
+	static double mLongitude;
 	
 	private LocalSalesAdapter localSalesAdapter;
 
@@ -40,18 +59,33 @@ public class LocalSalesActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_local_sales);
+		// Hiding SoftKeyboard
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		
 		mLocalSales = (ListView) findViewById(android.R.id.list);
 		mPostedSalesAmount = (TextView) findViewById(R.id.textView_localSalesAmount);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mCurrentUser = ParseUser.getCurrentUser();
-		
+		mMileInput = (EditText) findViewById(R.id.editText_localSalesSearch_mileInput);
+		mSearchSales = (Button) findViewById(R.id.button_localSalesSearch_searchLocalSales);
 		localSalesAdapter = new LocalSalesAdapter(this);
-		localSalesAdapter.loadObjects();
-		setListAdapter(localSalesAdapter);
+
+		mSearchSales.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				mLocationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+				if(userIsOnline())
+				{
+				mLocationListener = new UserLocation();
+			    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
+				}
+				else
+				{
+					Toast.makeText(getApplicationContext(), "It appears you have no network connectivity, please try again!", Toast.LENGTH_LONG).show();
+				}
+				  
+			}
+		});
+		
 		mLocalSales.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -72,11 +106,52 @@ public class LocalSalesActivity extends ListActivity {
 		});
 		
 	}
-	
-	public static void setTextView(int amount)
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mCurrentUser = ParseUser.getCurrentUser();
+		mLocationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		if(userIsOnline())
+		{
+			mLocationListener = new UserLocation();
+			mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, mLocationListener);
+		}
+		else
+		{
+			Toast.makeText(getApplicationContext(), "It appears you have no network connectivity, please try again!", Toast.LENGTH_LONG).show();
+		}
+		
+
+	}
+	public boolean userIsOnline() {
+	    Context context = this;
+	    ConnectivityManager cm = (ConnectivityManager) context
+	        .getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	    if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+	        return true;
+	    }
+	    return false;
+	}
+	public static void updateUserWithSaleInfo(Context context, int amount)
 	{
 		String finalString = Integer.toString(amount);
 		mPostedSalesAmount.setText(finalString);
+		Toast.makeText(context, amount + " local sales have been found!", Toast.LENGTH_LONG).show();
+	}
+	public static int getMiles()
+	{
+		String miles = mMileInput.getText().toString();
+		if (miles.matches(""))
+		{
+			return 30;
+		}
+		else
+		{
+			int mileCount = Integer.parseInt(miles);
+			return mileCount;
+		}
 	}
 	@SuppressLint("InlinedApi")
 	public void presentUserWithLogin() {
@@ -112,5 +187,49 @@ public class LocalSalesActivity extends ListActivity {
 			finish();
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public static ParseGeoPoint getUserCoords()
+	{
+		ParseGeoPoint usersPoints = new ParseGeoPoint(mLatitude, mLongitude);
+		return usersPoints;
+	}
+	public class UserLocation implements LocationListener{
+	    @Override
+	  public void onLocationChanged(Location loc) {
+	    	
+	    	
+	    	if (loc != null)
+	    	{
+	    		mLatitude = loc.getLatitude();
+		    	mLongitude = loc.getLongitude();
+		    	localSalesAdapter.loadObjects();
+				setListAdapter(localSalesAdapter);
+	    	}
+	    	else
+	    	{
+	    		
+	    	}
+	    	// Stopping Location Updates
+	    	mLocationManager.removeUpdates(mLocationListener);
+	  }
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 }

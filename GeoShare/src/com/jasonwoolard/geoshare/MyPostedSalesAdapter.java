@@ -32,7 +32,7 @@ public class MyPostedSalesAdapter extends ParseQueryAdapter<Sale> {
 				} catch (ParseException e) {
 					
 					e.printStackTrace();
-				}
+				} 
 				return query;
 			}
 		});

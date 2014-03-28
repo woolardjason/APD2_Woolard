@@ -2,6 +2,7 @@ package com.jasonwoolard.geoshare;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 // ParseQueryAdapter Documentation :
@@ -75,5 +76,9 @@ public class Sale extends ParseObject
 	public void setSalePhotoFile(ParseFile file) 
 	{
 		put("photo", file);
+	}
+	public void setSaleGeoLocation(ParseGeoPoint point)
+	{
+		put("saleLocation", point);
 	}
 }

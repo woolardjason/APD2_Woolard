@@ -9,7 +9,7 @@
         android:id="@+id/textView_localHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_searchLocalSales"
+        android:layout_below="@+id/button_localSalesSearch_searchLocalSales"
         android:layout_alignParentLeft="true"
         android:background="#336699"
         android:gravity="center_vertical"
@@ -41,28 +41,45 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button_searchLocalSales"
-        android:layout_alignBottom="@+id/button_searchLocalSales"
-        android:layout_alignParentLeft="true"
-        android:text="TextView" />
+        android:layout_alignBaseline="@+id/editText_localSalesSearch_mileInput"
+        android:layout_alignBottom="@+id/editText_localSalesSearch_mileInput"
+        android:layout_toRightOf="@+id/editText_localSalesSearch_mileInput"
+        android:layout_marginRight="5sp"
+        android:text="miles"
+        android:textSize="16sp" />
 
     <Button
-        android:id="@+id/button_searchLocalSales"
+        android:id="@+id/button_localSalesSearch_searchLocalSales"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Search" />
+        android:layout_height="30dp"
+        android:layout_marginBottom="10sp"
+                android:layout_marginTop="10sp"
+        
+        android:layout_toRightOf="@+id/textView1"
+        android:background="@drawable/gradient_listview_button"
+        android:text="Go" />
+
+    <TextView
+        android:id="@+id/textView_localSalesSearch_header"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignBaseline="@+id/editText_localSalesSearch_mileInput"
+        android:layout_alignBottom="@+id/editText_localSalesSearch_mileInput"
+        android:layout_marginLeft="15dp"                
+        android:text="Display Sales Within..."
+        android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
+        android:id="@+id/editText_localSalesSearch_mileInput"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_toLeftOf="@+id/button_searchLocalSales"
-        android:layout_toRightOf="@+id/textView1"
-        android:ems="10" />
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView_localSalesSearch_header"
+        android:layout_marginTop="9sp"
+        android:ems="10"
+        android:text="30"
+        android:inputType="number"
+        android:textSize="16sp" />
 
 </RelativeLayout>
