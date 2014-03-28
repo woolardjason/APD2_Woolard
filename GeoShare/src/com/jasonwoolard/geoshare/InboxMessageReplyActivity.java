@@ -35,7 +35,8 @@ public class InboxMessageReplyActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inbox_message_reply);
-		
+	    getActionBar().setDisplayHomeAsUpEnabled(true);
+
 		mSellerName = (TextView) findViewById(R.id.textView_inboxMsgReply_receiversName);
 		
 		mMessageDetails = (EditText) findViewById(R.id.editText_inboxMsgReply_message);
@@ -89,6 +90,9 @@ public class InboxMessageReplyActivity extends Activity {
 				}
 			});
 			break;
+		 case android.R.id.home:
+			  finish();
+			  return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
